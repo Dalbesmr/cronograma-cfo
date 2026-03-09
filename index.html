@@ -7,95 +7,173 @@
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        :root { --pm-navy: #002d5b; --pm-gold: #c5a059; --danger: #ff4d4d; --bg: #f0f2f5; }
-        body { font-family: 'Montserrat', sans-serif; background-color: var(--bg); margin: 0; padding: 0; }
-        header { background: linear-gradient(135deg, var(--pm-navy) 0%, #001a35 100%); color: white; padding: 40px 20px 80px; text-align: center; border-bottom: 5px solid var(--pm-gold); }
-        .container { max-width: 600px; margin: -60px auto 50px; padding: 0 15px; }
-        .status-card { background: white; padding: 20px; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.15); margin-bottom: 25px; text-align: center; }
+        :root {
+            --pm-navy: #003366; /* Azul Oficial PMMG */
+            --pm-gold: #C5A059; /* Dourado Oficial */
+            --pm-gray: #f4f4f4;
+            --danger: #e74c3c;
+            --success: #27ae60;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: #dee2e6;
+            margin: 0; padding: 0;
+            color: #212529;
+        }
+
+        header {
+            background: var(--pm-navy);
+            color: white;
+            padding: 30px 20px 70px;
+            text-align: center;
+            border-bottom: 4px solid var(--pm-gold);
+            position: relative;
+        }
+
+        .logo-pm {
+            width: 80px;
+            margin-bottom: 10px;
+        }
+
+        header h1 { margin: 5px 0; font-size: 1.8rem; font-weight: 900; }
+        header p { margin: 0; color: var(--pm-gold); font-weight: bold; letter-spacing: 2px; }
+
+        .container {
+            max-width: 650px;
+            margin: -50px auto 50px;
+            padding: 0 15px;
+        }
+
+        .status-card {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+            margin-bottom: 25px;
+            text-align: center;
+            border-top: 5px solid var(--pm-gold);
+        }
+
         #live-clock { font-size: 2.2rem; font-weight: 900; color: var(--pm-navy); margin: 0; }
-        #date-display { color: var(--pm-gold); font-weight: bold; text-transform: capitalize; margin-top: 5px; }
-        .day-block { background: white; border-radius: 12px; margin-bottom: 20px; overflow: hidden; border-left: 6px solid var(--pm-navy); box-shadow: 0 4px 10px rgba(0,0,0,0.05); }
-        .day-header { background: #f8f9fa; padding: 15px 20px; font-weight: 800; color: var(--pm-navy); border-bottom: 1px solid #eee; display: flex; justify-content: space-between; }
-        .task-list { padding: 5px 20px; }
-        .task-item { display: flex; align-items: center; padding: 15px 0; border-bottom: 1px solid #f1f1f1; cursor: pointer; }
-        input[type="checkbox"] { width: 20px; height: 20px; margin-right: 15px; accent-color: var(--pm-navy); }
-        .time-tag { font-size: 0.8rem; font-weight: 800; background: #eee; padding: 3px 7px; border-radius: 4px; margin-right: 12px; min-width: 45px; text-align: center; }
-        .task-label { flex-grow: 1; font-weight: 600; }
-        .overdue-badge { background: var(--danger); color: white; font-size: 0.65rem; padding: 3px 8px; border-radius: 4px; font-weight: 900; display: none; margin-left: 10px; }
-        input:checked ~ .task-label { text-decoration: line-through; color: #bbb; }
-        footer { text-align: center; padding: 40px; color: #999; font-size: 0.8rem; }
+        #date-display { text-transform: capitalize; font-weight: bold; color: #666; }
+
+        .day-block {
+            background: white;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .day-header {
+            background: #e9ecef;
+            padding: 12px 20px;
+            font-weight: 800;
+            color: var(--pm-navy);
+            border-bottom: 2px solid var(--pm-gold);
+            text-transform: uppercase;
+        }
+
+        .task-list { padding: 5px 0; }
+
+        .task-item {
+            display: flex;
+            align-items: center;
+            padding: 12px 20px;
+            border-bottom: 1px solid #eee;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .task-item:hover { background: #f8f9fa; }
+        .task-item:last-child { border-bottom: none; }
+
+        /* Estilo pausa/exercício */
+        .task-item.break { background: #fff5f5; color: #c53030; font-weight: bold; }
+        .task-item.exercise { background: #f0fff4; color: #276749; font-weight: bold; }
+
+        input[type="checkbox"] {
+            width: 22px; height: 22px;
+            margin-right: 15px;
+            accent-color: var(--pm-navy);
+            cursor: pointer;
+        }
+
+        .time-tag {
+            font-size: 0.85rem; font-weight: 800;
+            background: var(--pm-navy); color: white;
+            padding: 3px 8px; border-radius: 4px;
+            margin-right: 12px; min-width: 50px; text-align: center;
+        }
+
+        .task-info { flex-grow: 1; }
+        .task-label { font-weight: 700; font-size: 0.95rem; display: block; }
+        .task-obs { font-size: 0.75rem; color: #666; font-style: italic; }
+
+        .overdue-badge {
+            background: var(--danger); color: white;
+            font-size: 0.65rem; padding: 2px 6px;
+            border-radius: 4px; font-weight: 900;
+            display: none; margin-left: 5px;
+        }
+
+        input:checked ~ .task-info .task-label { text-decoration: line-through; color: #adb5bd; }
+        input:checked ~ .overdue-badge { display: none !important; }
+
+        .stats-footer {
+            background: var(--pm-navy); color: white;
+            padding: 25px; border-radius: 12px; margin-top: 30px;
+        }
+
+        .stats-footer h3 { color: var(--pm-gold); margin-top: 0; }
+        .stats-grid { font-size: 0.85rem; display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+
+        footer { text-align: center; padding: 30px; color: #666; font-weight: bold; font-size: 0.8rem; }
     </style>
 </head>
 <body>
-    <header>
-        <i class="fas fa-shield-halved" style="color: var(--pm-gold); font-size: 2.5rem; margin-bottom: 10px;"></i>
-        <h1>ESTUDOS CFO PMMG</h1>
-        <p>RUMO À ACADEMIA (APM)</p>
-    </header>
-    <div class="container">
-        <div class="status-card">
-            <p id="live-clock">00:00:00</p>
-            <div id="date-display">Iniciando...</div>
-        </div>
-        <div id="schedule-content"></div>
+
+<header>
+    <img src="https://upload.wikimedia.org/wikipedia/commons/b/b1/Bras%C3%A3o_da_Pol%C3%ADcia_Militar_de_Minas_Gerais.png" alt="PMMG" class="logo-pm">
+    <h1>CRONOGRAMA CFO</h1>
+    <p>RUMO À GLORIOSA</p>
+</header>
+
+<div class="container">
+    <div class="status-card">
+        <p id="live-clock">00:00:00</p>
+        <div id="date-display">Carregando...</div>
     </div>
-    <footer>FORÇA E HONRA</footer>
 
-    <script>
-        const cronograma = [
-            { dia: "Segunda-feira", id: 1, tarefas: [{h:"13:30", t:"Revisão 24h"}, {h:"13:45", t:"Português"}, {h:"14:45", t:"Dir. Constitucional"}, {h:"16:00", t:"Dir. Penal"}] },
-            { dia: "Terça-feira", id: 2, tarefas: [{h:"13:30", t:"Revisão 24h"}, {h:"13:45", t:"Português"}, {h:"14:45", t:"Dir. Administrativo"}, {h:"16:00", t:"Dir. Penal"}] },
-            { dia: "Quarta-feira", id: 3, tarefas: [{h:"13:30", t:"Revisão 24h"}, {h:"13:45", t:"Raciocínio Lógico"}, {h:"14:45", t:"Dir. Constitucional"}, {h:"16:00", t:"Criminologia"}] },
-            { dia: "Quinta-feira", id: 4, tarefas: [{h:"13:30", t:"Revisão 24h"}, {h:"13:45", t:"Inglês"}, {h:"14:45", t:"Dir. Administrativo"}, {h:"16:00", t:"Dir. Penal Militar"}] },
-            { dia: "Sexta-feira", id: 5, tarefas: [{h:"13:30", t:"Revisão Semanal"}, {h:"14:30", t:"Redação"}, {h:"16:00", t:"Dir. Civil"}, {h:"17:00", t:"Leg. Institucional"}] },
-            { dia: "Sábado", id: 6, tarefas: [{h:"09:00", t:"Simulado Geral"}, {h:"16:00", t:"Treino TAF"}] },
-            { dia: "Domingo", id: 0, tarefas: [{h:"10:00", t:"Planejamento"}, {h:"11:00", t:"Descanso"}] }
-        ];
+    <div id="schedule-content"></div>
 
-        function render() {
-            const html = cronograma.map(dia => `
-                <div class="day-block">
-                    <div class="day-header">${dia.dia}</div>
-                    <div class="task-list" data-weekday="${dia.id}">
-                        ${dia.tarefas.map(t => {
-                            const id = `t-${dia.id}-${t.h}`;
-                            const checked = localStorage.getItem(id) === 'true' ? 'checked' : '';
-                            return `<label class="task-item">
-                                <input type="checkbox" onchange="localStorage.setItem('${id}', this.checked); update();" ${checked}>
-                                <span class="time-tag">${t.h}</span>
-                                <span class="task-label">${t.t}</span>
-                                <span class="overdue-badge">ATRASADO</span>
-                            </label>`;
-                        }).join('')}
-                    </div>
-                </div>
-            `).join('');
-            document.getElementById('schedule-content').innerHTML = html;
-        }
+    <div class="stats-footer">
+        <h3>📊 Metas e Resumo</h3>
+        <div class="stats-grid">
+            <div>Português: 5x/semana</div>
+            <div>Constitucional: 5x/semana</div>
+            <div>Meta: 30-40 questões/dia</div>
+            <div>Revisão 7 dias: Sexta 17:40</div>
+        </div>
+    </div>
+</div>
 
-        function update() {
-            const now = new Date();
-            document.getElementById('live-clock').innerText = now.toLocaleTimeString('pt-BR');
-            document.getElementById('date-display').innerText = now.toLocaleDateString('pt-BR', {weekday:'long', day:'numeric', month:'long'});
-            
-            const curDay = now.getDay();
-            const curH = now.getHours();
-            const curM = now.getMinutes();
+<footer>ESTUDE COM HONRA &bull; PMMG 2024</footer>
 
-            document.querySelectorAll('.task-item').forEach(item => {
-                const dayId = parseInt(item.closest('.task-list').dataset.weekday);
-                const [h, m] = item.querySelector('.time-tag').innerText.split(':').map(Number);
-                const checked = item.querySelector('input').checked;
-                const badge = item.querySelector('.overdue-badge');
-                if (curDay === dayId && !checked && (curH > h || (curH === h && curM >= m))) {
-                    badge.style.display = 'inline-block';
-                } else { badge.style.display = 'none'; }
-            });
-        }
-
-        render();
-        setInterval(update, 1000);
-        update();
-    </script>
-</body>
-</html>
+<script>
+    const cronograma = [
+        { dia: "Segunda-feira", id: 1, tarefas: [
+            { h: "13:30", t: "Revisão Processo Penal", obs: "Revisão 24h" },
+            { h: "13:45", t: "Português", obs: "Teoria + 10 questões" },
+            { h: "14:45", t: "Direito Constitucional", obs: "Teoria + 10 questões" },
+            { h: "15:45", t: "Pausa", obs: "15 minutos", type: "break" },
+            { h: "16:00", t: "Direito Penal", obs: "Teoria + 5 questões" },
+            { h: "17:00", t: "Processo Penal", obs: "15 questões" },
+            { h: "18:00", t: "Exercício", obs: "Finalizar metas", type: "exercise" }
+        ]},
+        { dia: "Terça-feira", id: 2, tarefas: [
+            { h: "13:30", t: "Revisão Penal", obs: "Revisão 24h" },
+            { h: "13:45", t: "Português", obs: "Teoria + 10 questões" },
+            { h: "14:45", t: "Direito Constitucional", obs: "Lei Seca + 10 questões" },
+            {
