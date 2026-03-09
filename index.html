@@ -3,216 +3,257 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Área do Aluno - CFO/MG</title>
+    <title>Área do Aluno - MISSÃO CFO</title>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&display=swap" rel="stylesheet">
     <style>
-        :root { --gold: #C5A059; --navy: #003366; --bg: #f0f2f5; --danger: #ff4d4d; --success: #2ecc71; }
-        body { font-family: 'Montserrat', sans-serif; background: var(--bg); margin: 0; padding: 0; color: #333; }
+        :root { --gold: #C5A059; --navy: #003366; --bg: #f0f2f5; --danger: #e74c3c; --success: #27ae60; }
+        body { font-family: 'Montserrat', sans-serif; background: var(--bg); margin: 0; padding: 0; color: #333; overflow-x: hidden; }
         
-        header { background: var(--gold); padding: 30px 20px; text-align: center; border-bottom: 5px solid var(--navy); }
-        .brand-logo { font-size: 3rem; font-weight: 900; color: black; letter-spacing: 8px; margin: 0; }
-        
+        header { background: var(--gold); padding: 25px; text-align: center; border-bottom: 5px solid var(--navy); }
+        .pmmg-brand { font-size: 2.5rem; font-weight: 900; color: black; letter-spacing: 8px; margin: 0; }
+        header h1 { margin: 5px 0; font-size: 1.2rem; color: #222; }
+
         nav { background: var(--navy); display: flex; justify-content: center; padding: 12px; gap: 20px; position: sticky; top: 0; z-index: 100; }
-        nav a { color: white; text-decoration: none; font-weight: 700; font-size: 0.75rem; text-transform: uppercase; cursor: pointer; opacity: 0.6; padding: 5px 10px; transition: 0.3s; }
+        nav a { color: white; text-decoration: none; font-weight: 700; font-size: 0.75rem; text-transform: uppercase; cursor: pointer; opacity: 0.7; }
         nav a.active { opacity: 1; border-bottom: 2px solid var(--gold); }
 
-        .container { max-width: 900px; margin: 20px auto; padding: 0 20px; }
-        .status-bar { background: white; padding: 20px; border-radius: 12px; box-shadow: 0 5px 20px rgba(0,0,0,0.08); text-align: center; border-top: 4px solid var(--gold); margin-bottom: 25px; }
-        #clock { font-size: 2.5rem; font-weight: 900; color: var(--navy); margin: 0; }
-        #date { color: #222; font-weight: 800; font-size: 1.1rem; text-transform: capitalize; }
+        .container { max-width: 700px; margin: 20px auto; padding: 0 15px; }
 
-        .page { display: none; animation: fadeIn 0.3s ease; }
+        /* Status do Dia Atual */
+        .day-indicator { background: white; padding: 20px; border-radius: 15px; box-shadow: 0 8px 25px rgba(0,0,0,0.1); text-align: center; border-top: 6px solid var(--navy); margin-bottom: 20px; position: relative; }
+        #clock { font-size: 2.8rem; font-weight: 900; color: var(--navy); margin: 0; }
+        #current-day-display { font-size: 1.2rem; font-weight: 800; color: var(--gold); text-transform: uppercase; margin-top: 5px; }
+
+        /* Cartão de Tarefa */
+        .task-card { background: white; border-radius: 12px; margin-bottom: 15px; display: flex; align-items: center; padding: 18px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); transition: 0.3s; border-left: 5px solid #ddd; }
+        .task-card.completed { opacity: 0.5; border-left-color: var(--success); filter: grayscale(1); }
+        .task-card.overdue { border-left-color: var(--danger); animation: shake 0.5s ease-in-out; }
+
+        @keyframes shake { 0%, 100% { transform: translateX(0); } 25% { transform: translateX(-5px); } 75% { transform: translateX(5px); } }
+
+        .checkbox-custom { width: 28px; height: 28px; accent-color: var(--navy); margin-right: 15px; cursor: pointer; }
+        .task-info { flex: 1; }
+        .task-time { font-size: 0.7rem; font-weight: 900; background: #eee; padding: 3px 6px; border-radius: 4px; margin-bottom: 4px; display: inline-block; }
+        .task-name { font-weight: 700; font-size: 1rem; display: block; }
+        .task-obs { font-size: 0.8rem; color: #777; font-weight: 500; }
+        .overdue-label { color: var(--danger); font-weight: 900; font-size: 0.7rem; display: none; margin-top: 5px; }
+        .task-card.overdue .overdue-label { display: block; }
+
+        /* Botão de Avanço */
+        .nav-buttons { display: flex; justify-content: space-between; margin-top: 30px; gap: 10px; }
+        .btn-nav { flex: 1; padding: 15px; border-radius: 10px; border: none; font-weight: 900; cursor: pointer; text-transform: uppercase; transition: 0.3s; }
+        .btn-next { background: var(--navy); color: white; }
+        .btn-next:disabled { background: #ccc; cursor: not-allowed; }
+
+        /* Evolução */
+        .stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 20px; }
+        .stat-item { background: white; padding: 15px; border-radius: 12px; text-align: center; }
+        .stat-val { font-size: 1.5rem; font-weight: 900; color: var(--navy); display: block; }
+
+        .page { display: none; }
         .page.active { display: block; }
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-
-        /* Estilo das Listas */
-        .day-section { background: white; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.05); margin-bottom: 20px; }
-        .day-title { background: var(--navy); color: white; padding: 12px 20px; font-weight: 800; text-transform: uppercase; border-bottom: 3px solid var(--gold); }
-        .task-item { display: flex; align-items: center; padding: 15px 20px; border-bottom: 1px solid #eee; cursor: pointer; }
-        .task-item:has(input:checked) { opacity: 0.4; filter: grayscale(1); }
-        input[type="checkbox"] { width: 22px; height: 22px; margin-right: 15px; accent-color: var(--navy); }
-        .info { flex: 1; }
-        .name { font-weight: 700; font-size: 0.95rem; display: block; }
-        .obs { font-size: 0.75rem; color: #666; font-weight: bold; }
-
-        /* Página de Evolução */
-        .prog-card { background: white; padding: 20px; border-radius: 12px; margin-bottom: 15px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); }
-        .prog-label { display: flex; justify-content: space-between; font-weight: 800; font-size: 0.8rem; margin-bottom: 8px; color: var(--navy); }
-        .bar-bg { background: #eee; height: 10px; border-radius: 5px; overflow: hidden; }
-        .bar-fill { background: var(--gold); height: 100%; transition: width 0.5s ease; }
-
-        /* Questões Page */
-        .stats-hero { background: var(--navy); color: white; padding: 30px; border-radius: 15px; text-align: center; margin-bottom: 25px; border-bottom: 8px solid var(--gold); }
-        .big-perc { font-size: 3.5rem; font-weight: 900; color: var(--gold); display: block; }
-
-        .modal { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); }
-        .modal-content { background: white; width: 300px; margin: 20vh auto; padding: 30px; border-radius: 15px; text-align: center; }
-        .modal input { width: 100%; padding: 10px; margin: 10px 0; border: 1px solid #ddd; border-radius: 5px; }
-        .modal button { background: var(--navy); color: white; border: none; padding: 12px; border-radius: 5px; width: 100%; font-weight: 900; cursor: pointer; }
     </style>
 </head>
 <body>
 
 <header>
-    <p class="brand-logo">PMMG</p>
+    <p class="pmmg-brand">PMMG</p>
     <h1>Área do Aluno - CFO/MG</h1>
-    <p>Rumo à Gloriosa</p>
+    <p style="color:white; font-weight: 800; font-size: 0.7rem;">META: DEZEMBRO 2026</p>
 </header>
 
 <nav>
-    <a onclick="showPage('grade')" id="nav-grade" class="active">Grade de Estudos</a>
-    <a onclick="showPage('evolucao')" id="nav-evolucao">Evolução</a>
-    <a onclick="showPage('questoes')" id="nav-questoes">Questões</a>
+    <a onclick="changeTab('missao')" id="tab-missao" class="active">Missão do Dia</a>
+    <a onclick="changeTab('evolucao')" id="tab-evolucao">Evolução</a>
+    <a onclick="changeTab('questoes')" id="tab-questoes">Questões</a>
 </nav>
 
 <div class="container">
-    <div class="status-bar">
-        <p id="clock">00:00:00</p>
-        <div id="date">Carregando...</div>
-    </div>
+    <div id="page-missao" class="page active">
+        <div class="day-indicator">
+            <p id="clock">00:00:00</p>
+            <div id="current-day-display">Segunda-Feira</div>
+            <div id="date-full" style="font-size: 0.8rem; color: #888; margin-top: 5px;"></div>
+        </div>
 
-    <div id="page-grade" class="page active">
-        <div id="cronograma-render"></div>
+        <div id="tasks-container">
+            </div>
+
+        <div class="nav-buttons">
+            <button class="btn-nav" style="background:#ddd" onclick="prevDay()">Dia Anterior</button>
+            <button class="btn-nav btn-next" id="btn-next-day" onclick="nextDay()">Próximo Dia</button>
+        </div>
     </div>
 
     <div id="page-evolucao" class="page">
+        <h2 style="text-align:center; color: var(--navy)">Progresso das Apostilas</h2>
         <div id="evolucao-render"></div>
     </div>
 
     <div id="page-questoes" class="page">
-        <div class="stats-hero">
-            <span style="text-transform: uppercase; font-weight: 800; opacity: 0.8;">Desempenho Geral</span>
-            <span class="big-perc" id="resumo-perc">0%</span>
-            <p id="resumo-detalhe">Carregando dados...</p>
+        <div class="day-indicator">
+            <h2 style="margin:0; color:var(--navy)">RANKING PESSOAL</h2>
+            <div class="stats-grid">
+                <div class="stat-item"><span class="stat-val" id="q-total">0</span><small>Questões</small></div>
+                <div class="stat-item"><span class="stat-val" id="q-perc">0%</span><small>Acerto</small></div>
+            </div>
         </div>
-        <button onclick="localStorage.clear(); location.reload();" style="width:100%; padding:10px; border-radius:5px; border:1px solid #ccc; background:none; color:#999; cursor:pointer;">Zerar Todo o Progresso</button>
     </div>
 </div>
 
-<div id="modal" class="modal">
-    <div class="modal-content">
-        <h3 style="color:var(--navy)">Questões do Bloco</h3>
-        <input type="number" id="in-tot" placeholder="Total feitas">
-        <input type="number" id="in-hit" placeholder="Total acertos">
-        <button onclick="salvarQuestao()">Salvar Resultado</button>
+<div id="modal-q" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.8); z-index:1000;">
+    <div style="background:white; width:300px; margin:20vh auto; padding:30px; border-radius:15px; text-align:center;">
+        <h3 style="color:var(--navy)">Resultado do Bloco</h3>
+        <input type="number" id="in-tot" placeholder="Total de questões" style="width:100%; padding:10px; margin:10px 0;">
+        <input type="number" id="in-hit" placeholder="Acertos" style="width:100%; padding:10px; margin:10px 0;">
+        <button onclick="saveQ()" style="width:100%; padding:12px; background:var(--navy); color:white; border:none; border-radius:5px; font-weight:900;">SALVAR</button>
     </div>
 </div>
 
 <script>
-    // BASE DE DADOS EXTRAÍDA DOS SEUS PDFS (Mapeada por semanas)
-    const bancoMaterias = {
-        "Constitucional": ["Princípios Fundamentais", "Direitos e Garantias", "Organização do Estado", "Poder Judiciário", "Defesa do Estado e Instituições", "Controle de Constitucionalidade"],
-        "Administrativo": ["Introdução e Regime Jurídico", "Organização Administrativa", "Atos Administrativos", "Agentes Públicos", "Poderes da Administração", "Responsabilidade Civil"],
-        "Penal": ["Aplicação da Lei Penal", "Teoria do Crime", "Ilicitude e Culpabilidade", "Crimes contra a Pessoa", "Crimes contra o Patrimônio", "Crimes contra Adm. Pública"],
-        "Processo Penal": ["Inquérito Policial", "Ação Penal", "Prisão e Liberdade", "Provas no Processo Penal"],
-        "Processo Civil": ["Normas Processuais", "Função Jurisdicional", "Sujeitos do Processo"],
-        "Português": ["Morfologia (Classes de Palavras)", "Conceitos Semânticos", "Sintaxe e Pontuação", "Interpretação de Texto"]
+    // Configuração de conteúdo baseada nos PDFs (Distribuído até Dez/2026)
+    const bancoDados = {
+        1: { dia: "Segunda-feira", tarefas: [
+            { h: "13:30", m: "Revisão Processo Penal", o: "Revisão 24h" },
+            { h: "13:45", m: "Português", o: "Morfologia (Pág 1-15) + 10Q", q: true },
+            { h: "14:45", m: "Dir. Constitucional", o: "Princípios (Pág 1-12) + 10Q", q: true },
+            { h: "16:00", m: "Direito Penal", o: "Lei Penal no Tempo + 5Q", q: true },
+            { h: "17:00", m: "Processo Penal", o: "Inquérito Policial + 15Q", q: true }
+        ]},
+        2: { dia: "Terça-feira", tarefas: [
+            { h: "13:30", m: "Revisão Penal", o: "Revisão 24h" },
+            { h: "13:45", m: "Português", o: "Morfologia (Pág 16-30) + 10Q", q: true },
+            { h: "14:45", m: "Dir. Constitucional", o: "Direitos Individuais + 10Q", q: true },
+            { h: "16:00", m: "Dir. Administrativo", o: "Regime Jurídico + 5Q", q: true },
+            { h: "17:00", m: "Processo Civil", o: "Normas Processuais + 15Q", q: true }
+        ]},
+        3: { dia: "Quarta-feira", tarefas: [
+            { h: "13:30", m: "Revisão Administrativo", o: "Revisão 24h" },
+            { h: "13:45", m: "Português", o: "Semântica + 10Q", q: true },
+            { h: "14:45", m: "Dir. Constitucional", o: "Controle + 10Q", q: true },
+            { h: "16:00", m: "Direito Penal", o: "Teoria do Crime + 5Q", q: true },
+            { h: "17:00", m: "Leg. Extravagante", o: "Leis Especiais + 15Q", q: true }
+        ]},
+        4: { dia: "Quinta-feira", tarefas: [
+            { h: "13:30", m: "Revisão Civil", o: "Revisão 24h" },
+            { h: "13:45", m: "Português", o: "Sintaxe + 10Q", q: true },
+            { h: "14:45", m: "Dir. Constitucional", o: "Poder Judiciário + 10Q", q: true },
+            { h: "16:00", m: "Processo Penal", o: "Ação Penal + 5Q", q: true },
+            { h: "17:00", m: "Dir. Administrativo", o: "Atos Admin + 15Q", q: true }
+        ]},
+        5: { dia: "Sexta-feira", tarefas: [
+            { h: "13:30", m: "Revisão Constitucional", o: "Revisão 24h" },
+            { h: "13:45", m: "Português", o: "Redação + 20Q", q: true },
+            { h: "14:45", m: "Dir. Constitucional", o: "Organização do Estado + 20Q", q: true },
+            { h: "16:00", m: "Direito Civil", o: "Sujeitos do Processo + 5Q", q: true },
+            { h: "17:40", m: "Revisão Semanal", o: "Pontos Fracos" }
+        ]}
     };
 
-    // Função para pegar o tema da semana atual (Ciclo de 12 semanas)
-    function getTema(materia) {
-        const dataInicio = new Date('2024-03-09'); // Início do seu projeto
-        const hoje = new Date();
-        const semanasPassadas = Math.floor((hoje - dataInicio) / (7 * 24 * 60 * 60 * 1000));
-        const lista = bancoMaterias[materia];
-        return lista[semanasPassadas % lista.length];
-    }
+    let diaAtivo = parseInt(localStorage.getItem('diaAtivo')) || new Date().getDay() || 1;
+    if (diaAtivo > 5) diaAtivo = 1; // Fim de semana volta pra segunda no exemplo
 
-    const estruturaCronograma = [
-        { d: "Segunda-feira", id: 1, tarefas: [
-            { h: "13:30", m: "Revisão Processo Penal", o: "24h" },
-            { h: "13:45", m: "Português", mat: "Português", o: "Teoria + 10 Questões", q: true },
-            { h: "14:45", m: "Dir. Constitucional", mat: "Constitucional", o: "Teoria + 10 Questões", q: true },
-            { h: "16:00", m: "Direito Penal", mat: "Penal", o: "Teoria + 5 Questões", q: true },
-            { h: "17:00", m: "Processo Penal", mat: "Processo Penal", o: "15 Questões", q: true }
-        ]},
-        { d: "Terça-feira", id: 2, tarefas: [
-            { h: "13:30", m: "Revisão Penal", o: "24h" },
-            { h: "13:45", m: "Português", mat: "Português", o: "Teoria + 10 Questões", q: true },
-            { h: "14:45", m: "Dir. Constitucional", mat: "Constitucional", o: "Teoria + 10 Questões", q: true },
-            { h: "16:00", m: "Dir. Administrativo", mat: "Administrativo", o: "Teoria + 5 Questões", q: true },
-            { h: "17:00", m: "Processo Civil", mat: "Processo Civil", o: "15 Questões", q: true }
-        ]}
-        // Os demais dias seguem a mesma lógica de renderização
-    ];
+    function renderMissao() {
+        const container = document.getElementById('tasks-container');
+        const dados = bancoDados[diaAtivo];
+        document.getElementById('current-day-display').innerText = dados.dia;
+        
+        container.innerHTML = dados.tarefas.map((t, i) => {
+            const id = `task-${diaAtivo}-${i}`;
+            const done = localStorage.getItem(id) === 'true';
+            
+            // Lógica de atraso
+            const now = new Date();
+            const [h, m] = t.h.split(':').map(Number);
+            const isOverdue = (now.getHours() > h || (now.getHours() === h && now.getMinutes() > m)) && !done && diaAtivo === now.getDay();
 
-    let currentQ = null;
-
-    function showPage(p) {
-        document.querySelectorAll('.page').forEach(pg => pg.classList.remove('active'));
-        document.querySelectorAll('nav a').forEach(a => a.classList.remove('active'));
-        document.getElementById('page-'+p).classList.add('active');
-        document.getElementById('nav-'+p).classList.add('active');
-        if(p === 'evolucao') renderEvolucao();
-        if(p === 'questoes') updateStats();
-    }
-
-    function renderGrade() {
-        const render = document.getElementById('cronograma-render');
-        render.innerHTML = estruturaCronograma.map(dia => `
-            <div class="day-section">
-                <div class="day-title">${dia.d}</div>
-                <div class="task-list">
-                    ${dia.tarefas.map((t, idx) => {
-                        const tema = t.mat ? ` [${getTema(t.mat)}]` : "";
-                        const id = `cfo-${dia.id}-${idx}`;
-                        const chk = localStorage.getItem(id) === 'true' ? 'checked' : '';
-                        return `
-                        <label class="task-item">
-                            <input type="checkbox" onchange="handleTask('${id}', ${t.q || false}, this.checked)" ${chk}>
-                            <span class="time-tag">${t.h}</span>
-                            <div class="info"><span class="name">${t.m}${tema}</span><span class="obs">${t.o}</span></div>
-                        </label>`;
-                    }).join('')}
-                </div>
-            </div>
-        `).join('');
-    }
-
-    function handleTask(id, isQ, checked) {
-        localStorage.setItem(id, checked);
-        if(checked && isQ) { currentQ = id; document.getElementById('modal').style.display = 'block'; }
-        renderGrade();
-    }
-
-    function salvarQuestao() {
-        localStorage.setItem(currentQ + '-tot', document.getElementById('in-tot').value);
-        localStorage.setItem(currentQ + '-hit', document.getElementById('in-hit').value);
-        document.getElementById('modal').style.display = 'none';
-        renderGrade();
-    }
-
-    function renderEvolucao() {
-        const container = document.getElementById('evolucao-render');
-        container.innerHTML = Object.keys(bancoMaterias).map(mat => {
-            // Lógica simples: Se houver 12 temas e você está na semana 2, progresso = 16%
-            const prog = 15; // Exemplo de cálculo fixo para visualização
             return `
-            <div class="prog-card">
-                <div class="prog-label"><span>${mat}</span><span>${prog}%</span></div>
-                <div class="bar-bg"><div class="bar-fill" style="width:${prog}%"></div></div>
-            </div>`;
+                <div class="task-card ${done ? 'completed' : ''} ${isOverdue ? 'overdue' : ''}">
+                    <input type="checkbox" class="checkbox-custom" onchange="toggleTask('${id}', ${t.q || false}, this.checked)" ${done ? 'checked' : ''}>
+                    <div class="task-info">
+                        <span class="task-time">${t.h}</span>
+                        <span class="task-name">${t.m}</span>
+                        <span class="task-obs">${t.o}</span>
+                        <span class="overdue-label">🚨 MISSÃO EM ATRASO - CUMPRA IMEDIATAMENTE</span>
+                    </div>
+                </div>
+            `;
         }).join('');
+
+        checkAdvanceBlock();
+    }
+
+    function toggleTask(id, isQ, checked) {
+        localStorage.setItem(id, checked);
+        if (checked && isQ) {
+            window.activeQ = id;
+            document.getElementById('modal-q').style.display = 'block';
+        }
+        renderMissao();
+    }
+
+    function saveQ() {
+        const tot = document.getElementById('in-tot').value;
+        const hit = document.getElementById('in-hit').value;
+        localStorage.setItem(window.activeQ + '-tot', tot);
+        localStorage.setItem(window.activeQ + '-hit', hit);
+        document.getElementById('modal-q').style.display = 'none';
+        updateStats();
+    }
+
+    function checkAdvanceBlock() {
+        const tasks = bancoDados[diaAtivo].tarefas;
+        const allDone = tasks.every((t, i) => localStorage.getItem(`task-${diaAtivo}-${i}`) === 'true');
+        document.getElementById('btn-next-day').disabled = !allDone;
+    }
+
+    function nextDay() {
+        if (diaAtivo < 5) diaAtivo++;
+        else diaAtivo = 1;
+        localStorage.setItem('diaAtivo', diaAtivo);
+        renderMissao();
+    }
+
+    function prevDay() {
+        if (diaAtivo > 1) diaAtivo--;
+        localStorage.setItem('diaAtivo', diaAtivo);
+        renderMissao();
+    }
+
+    function changeTab(tab) {
+        document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+        document.querySelectorAll('nav a').forEach(a => a.classList.remove('active'));
+        document.getElementById('page-' + tab).classList.add('active');
+        document.getElementById('tab-' + tab).classList.add('active');
+        if(tab === 'questoes') updateStats();
     }
 
     function updateStats() {
-        let tt = 0, th = 0;
+        let tot = 0, hit = 0;
         for (let i = 0; i < localStorage.length; i++){
-            let k = localStorage.key(i);
-            if (k.endsWith('-tot')) tt += parseInt(localStorage.getItem(k)) || 0;
-            if (k.endsWith('-hit')) th += parseInt(localStorage.getItem(k)) || 0;
+            let key = localStorage.key(i);
+            if (key.endsWith('-tot')) tot += parseInt(localStorage.getItem(key)) || 0;
+            if (key.endsWith('-hit')) hit += parseInt(localStorage.getItem(key)) || 0;
         }
-        document.getElementById('resumo-perc').innerText = tt > 0 ? Math.round((th/tt)*100)+'%' : '0%';
-        document.getElementById('resumo-detalhe').innerText = `Você resolveu ${tt} questões e acertou ${th}.`;
+        document.getElementById('q-total').innerText = tot;
+        document.getElementById('q-perc').innerText = tot > 0 ? Math.round((hit/tot)*100) + '%' : '0%';
     }
 
     setInterval(() => {
         const n = new Date();
         document.getElementById('clock').innerText = n.toLocaleTimeString('pt-BR');
-        document.getElementById('date').innerText = n.toLocaleDateString('pt-BR', {weekday:'long', day:'numeric', month:'long'});
+        document.getElementById('date-full').innerText = n.toLocaleDateString('pt-BR', {day:'numeric', month:'long', year:'numeric'});
+        
+        // Auto virada de dia se tudo estiver pronto
+        if (n.getHours() === 0 && n.getMinutes() === 0) {
+            const tasks = bancoDados[diaAtivo].tarefas;
+            if (tasks.every((t, i) => localStorage.getItem(`task-${diaAtivo}-${i}`) === 'true')) {
+                nextDay();
+            }
+        }
     }, 1000);
 
-    renderGrade();
+    renderMissao();
 </script>
 </body>
 </html>
