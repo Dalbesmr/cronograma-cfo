@@ -5,175 +5,132 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>QAP | Cronograma PMMG</title>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        :root {
-            --pm-navy: #003366; /* Azul Oficial PMMG */
-            --pm-gold: #C5A059; /* Dourado Oficial */
-            --pm-gray: #f4f4f4;
-            --danger: #e74c3c;
-            --success: #27ae60;
-        }
-
-        body {
-            font-family: 'Montserrat', sans-serif;
-            background-color: #dee2e6;
-            margin: 0; padding: 0;
-            color: #212529;
-        }
-
-        header {
-            background: var(--pm-navy);
-            color: white;
-            padding: 30px 20px 70px;
-            text-align: center;
-            border-bottom: 4px solid var(--pm-gold);
-            position: relative;
-        }
-
-        .logo-pm {
-            width: 80px;
-            margin-bottom: 10px;
-        }
-
-        header h1 { margin: 5px 0; font-size: 1.8rem; font-weight: 900; }
-        header p { margin: 0; color: var(--pm-gold); font-weight: bold; letter-spacing: 2px; }
-
-        .container {
-            max-width: 650px;
-            margin: -50px auto 50px;
-            padding: 0 15px;
-        }
-
-        .status-card {
-            background: white;
-            padding: 20px;
-            border-radius: 12px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
-            margin-bottom: 25px;
-            text-align: center;
-            border-top: 5px solid var(--pm-gold);
-        }
-
-        #live-clock { font-size: 2.2rem; font-weight: 900; color: var(--pm-navy); margin: 0; }
-        #date-display { text-transform: capitalize; font-weight: bold; color: #666; }
-
-        .day-block {
-            background: white;
-            border-radius: 8px;
-            margin-bottom: 20px;
-            overflow: hidden;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-        }
-
-        .day-header {
-            background: #e9ecef;
-            padding: 12px 20px;
-            font-weight: 800;
-            color: var(--pm-navy);
-            border-bottom: 2px solid var(--pm-gold);
-            text-transform: uppercase;
-        }
-
-        .task-list { padding: 5px 0; }
-
-        .task-item {
-            display: flex;
-            align-items: center;
-            padding: 12px 20px;
-            border-bottom: 1px solid #eee;
-            cursor: pointer;
-            transition: background 0.2s;
-        }
-
-        .task-item:hover { background: #f8f9fa; }
-        .task-item:last-child { border-bottom: none; }
-
-        /* Estilo pausa/exercício */
-        .task-item.break { background: #fff5f5; color: #c53030; font-weight: bold; }
-        .task-item.exercise { background: #f0fff4; color: #276749; font-weight: bold; }
-
-        input[type="checkbox"] {
-            width: 22px; height: 22px;
-            margin-right: 15px;
-            accent-color: var(--pm-navy);
-            cursor: pointer;
-        }
-
-        .time-tag {
-            font-size: 0.85rem; font-weight: 800;
-            background: var(--pm-navy); color: white;
-            padding: 3px 8px; border-radius: 4px;
-            margin-right: 12px; min-width: 50px; text-align: center;
-        }
-
-        .task-info { flex-grow: 1; }
-        .task-label { font-weight: 700; font-size: 0.95rem; display: block; }
-        .task-obs { font-size: 0.75rem; color: #666; font-style: italic; }
-
-        .overdue-badge {
-            background: var(--danger); color: white;
-            font-size: 0.65rem; padding: 2px 6px;
-            border-radius: 4px; font-weight: 900;
-            display: none; margin-left: 5px;
-        }
-
-        input:checked ~ .task-info .task-label { text-decoration: line-through; color: #adb5bd; }
-        input:checked ~ .overdue-badge { display: none !important; }
-
-        .stats-footer {
-            background: var(--pm-navy); color: white;
-            padding: 25px; border-radius: 12px; margin-top: 30px;
-        }
-
-        .stats-footer h3 { color: var(--pm-gold); margin-top: 0; }
-        .stats-grid { font-size: 0.85rem; display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-
-        footer { text-align: center; padding: 30px; color: #666; font-weight: bold; font-size: 0.8rem; }
+        :root { --navy: #003366; --gold: #C5A059; --danger: #e74c3c; }
+        body { font-family: 'Montserrat', sans-serif; background-color: #dee2e6; margin: 0; padding: 0; }
+        header { background: var(--navy); color: white; padding: 40px 20px 80px; text-align: center; border-bottom: 4px solid var(--gold); }
+        header h1 { margin: 0; font-size: 2rem; font-weight: 900; }
+        header p { margin: 5px 0 0; color: var(--gold); font-weight: bold; letter-spacing: 2px; }
+        .container { max-width: 600px; margin: -60px auto 50px; padding: 0 15px; }
+        .card { background: white; padding: 20px; border-radius: 12px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); margin-bottom: 25px; text-align: center; border-top: 5px solid var(--gold); }
+        #clock { font-size: 2.2rem; font-weight: 900; color: var(--navy); margin: 0; }
+        .day-block { background: white; border-radius: 8px; margin-bottom: 15px; overflow: hidden; box-shadow: 0 4px 6px rgba(0,0,0,0.05); }
+        .day-header { background: #e9ecef; padding: 12px 20px; font-weight: 800; color: var(--navy); border-bottom: 2px solid var(--gold); text-transform: uppercase; }
+        .task { display: flex; align-items: center; padding: 12px 20px; border-bottom: 1px solid #eee; cursor: pointer; }
+        .task:last-child { border-bottom: none; }
+        .task.break { background: #fff5f5; }
+        .task.exercise { background: #f0fff4; }
+        input[type="checkbox"] { width: 20px; height: 20px; margin-right: 15px; accent-color: var(--navy); }
+        .time { font-size: 0.8rem; font-weight: 800; background: var(--navy); color: white; padding: 3px 6px; border-radius: 4px; margin-right: 10px; }
+        .info { flex-grow: 1; }
+        .label { font-weight: 700; display: block; font-size: 0.9rem; }
+        .obs { font-size: 0.7rem; color: #666; }
+        .badge { background: var(--danger); color: white; font-size: 0.6rem; padding: 2px 5px; border-radius: 3px; display: none; margin-left: 5px; }
+        input:checked ~ .info .label { text-decoration: line-through; color: #ccc; }
+        .summary { background: var(--navy); color: white; padding: 20px; border-radius: 12px; font-size: 0.8rem; }
+        .summary h3 { color: var(--gold); margin: 0 0 10px; }
     </style>
 </head>
 <body>
-
-<header>
-    <img src="https://upload.wikimedia.org/wikipedia/commons/b/b1/Bras%C3%A3o_da_Pol%C3%ADcia_Militar_de_Minas_Gerais.png" alt="PMMG" class="logo-pm">
-    <h1>CRONOGRAMA CFO</h1>
-    <p>RUMO À GLORIOSA</p>
-</header>
-
-<div class="container">
-    <div class="status-card">
-        <p id="live-clock">00:00:00</p>
-        <div id="date-display">Carregando...</div>
-    </div>
-
-    <div id="schedule-content"></div>
-
-    <div class="stats-footer">
-        <h3>📊 Metas e Resumo</h3>
-        <div class="stats-grid">
-            <div>Português: 5x/semana</div>
-            <div>Constitucional: 5x/semana</div>
-            <div>Meta: 30-40 questões/dia</div>
-            <div>Revisão 7 dias: Sexta 17:40</div>
+    <header>
+        <h1>CRONOGRAMA CFO</h1>
+        <p>RUMO À GLORIOSA</p>
+    </header>
+    <div class="container">
+        <div class="card">
+            <p id="clock">00:00:00</p>
+            <div id="date" style="font-weight: bold; color: #666;">Carregando...</div>
+        </div>
+        <div id="content"></div>
+        <div class="summary">
+            <h3>📊 Resumo de Metas</h3>
+            Português e Constitucional: 5x/semana<br>
+            Meta: 30-40 questões diárias
         </div>
     </div>
-</div>
+    <script>
+        const dados = [
+            { d: "Segunda-feira", id: 1, t: [
+                { h: "13:30", m: "Revisão Processo Penal", o: "Revisão 24h" },
+                { h: "13:45", m: "Português", o: "Teoria + 10 questões" },
+                { h: "14:45", m: "Direito Constitucional", o: "Teoria + 10 questões" },
+                { h: "15:45", m: "Pausa", o: "15 min", type: "break" },
+                { h: "16:00", m: "Direito Penal", o: "Teoria + 5 questões" },
+                { h: "17:00", m: "Processo Penal", o: "15 questões" },
+                { h: "18:00", m: "Exercício", o: "Finalizar metas", type: "exercise" }
+            ]},
+            { d: "Terça-feira", id: 2, t: [
+                { h: "13:30", m: "Revisão Penal", o: "Revisão 24h" },
+                { h: "13:45", m: "Português", o: "Teoria + 10 questões" },
+                { h: "14:45", m: "Direito Constitucional", o: "Lei Seca + 10 questões" },
+                { h: "15:45", m: "Pausa", o: "15 min", type: "break" },
+                { h: "16:00", m: "Direito Administrativo", o: "Teoria + 5 questões" },
+                { h: "17:00", m: "Processo Civil", o: "15 questões" },
+                { h: "18:00", m: "Direito Civil", o: "Teoria + 10 questões", type: "exercise" }
+            ]},
+            { d: "Quarta-feira", id: 3, t: [
+                { h: "13:30", m: "Revisão Administrativo", o: "Revisão 24h" },
+                { h: "13:45", m: "Português", o: "Interpretação + 10 questões" },
+                { h: "14:45", m: "Direito Constitucional", o: "Controle + 10 questões" },
+                { h: "15:45", m: "Pausa", o: "15 min", type: "break" },
+                { h: "16:00", m: "Direito Penal", o: "Teoria + 5 questões" },
+                { h: "17:00", m: "Legislação Extravagante", o: "10-15 questões" },
+                { h: "18:00", m: "Exercício", o: "Finalizar metas", type: "exercise" }
+            ]},
+            { d: "Quinta-feira", id: 4, t: [
+                { h: "13:30", m: "Revisão Civil", o: "Revisão 24h" },
+                { h: "13:45", m: "Português", o: "Gramática + 10 questões" },
+                { h: "14:45", m: "Direito Constitucional", o: "Org. Estado + 10 questões" },
+                { h: "15:45", m: "Pausa", o: "15 min", type: "break" },
+                { h: "16:00", m: "Processo Penal", o: "Teoria + 5 questões" },
+                { h: "17:00", m: "Direito Administrativo", o: "15 questões" },
+                { h: "18:00", m: "Processo Civil", o: "Teoria + 10 questões", type: "exercise" }
+            ]},
+            { d: "Sexta-feira", id: 5, t: [
+                { h: "13:30", m: "Revisão Constitucional", o: "Revisão 24h" },
+                { h: "13:45", m: "Português", o: "20 questões" },
+                { h: "14:45", m: "Direito Constitucional", o: "20 questões" },
+                { h: "15:45", m: "Pausa", o: "15 min", type: "break" },
+                { h: "16:00", m: "Direito Civil", o: "Teoria + 5 questões" },
+                { h: "17:00", m: "Legislação Extravagante", o: "15 questões" },
+                { h: "17:40", m: "Revisão Semanal", o: "Erros e pontos fracos" },
+                { h: "18:00", m: "Exercício", o: "Finalizar metas", type: "exercise" }
+            ]}
+        ];
 
-<footer>ESTUDE COM HONRA &bull; PMMG 2024</footer>
+        function montar() {
+            document.getElementById('content').innerHTML = dados.map(dia => `
+                <div class="day-block">
+                    <div class="day-header">${dia.d}</div>
+                    <div class="list" data-w="${dia.id}">
+                        ${dia.t.map(x => {
+                            const id = `cfo-${dia.id}-${x.h}`;
+                            const chk = localStorage.getItem(id) === 'true' ? 'checked' : '';
+                            return `<label class="task ${x.type || ''}">
+                                <input type="checkbox" onchange="localStorage.setItem('${id}', this.checked); up();" ${chk}>
+                                <span class="time">${x.h}</span>
+                                <div class="info"><span class="label">${x.m}</span><span class="obs">${x.o}</span></div>
+                                <span class="badge">ATRASADO</span>
+                            </label>`;
+                        }).join('')}
+                    </div>
+                </div>
+            `).join('');
+        }
 
-<script>
-    const cronograma = [
-        { dia: "Segunda-feira", id: 1, tarefas: [
-            { h: "13:30", t: "Revisão Processo Penal", obs: "Revisão 24h" },
-            { h: "13:45", t: "Português", obs: "Teoria + 10 questões" },
-            { h: "14:45", t: "Direito Constitucional", obs: "Teoria + 10 questões" },
-            { h: "15:45", t: "Pausa", obs: "15 minutos", type: "break" },
-            { h: "16:00", t: "Direito Penal", obs: "Teoria + 5 questões" },
-            { h: "17:00", t: "Processo Penal", obs: "15 questões" },
-            { h: "18:00", t: "Exercício", obs: "Finalizar metas", type: "exercise" }
-        ]},
-        { dia: "Terça-feira", id: 2, tarefas: [
-            { h: "13:30", t: "Revisão Penal", obs: "Revisão 24h" },
-            { h: "13:45", t: "Português", obs: "Teoria + 10 questões" },
-            { h: "14:45", t: "Direito Constitucional", obs: "Lei Seca + 10 questões" },
-            {
+        function up() {
+            const n = new Date();
+            document.getElementById('clock').innerText = n.toLocaleTimeString('pt-BR');
+            document.getElementById('date').innerText = n.toLocaleDateString('pt-BR', {weekday:'long', day:'numeric', month:'long'});
+            const d = n.getDay(), h = n.getHours(), m = n.getMinutes();
+            document.querySelectorAll('.task').forEach(el => {
+                const dw = parseInt(el.closest('.list').dataset.w);
+                const [th, tm] = el.querySelector('.time').innerText.split(':').map(Number);
+                const b = el.querySelector('.badge'), c = el.querySelector('input').checked;
+                b.style.display = (d===dw && !c && (h>th || (h===th && m>=tm))) ? 'inline' : 'none';
+            });
+        }
+        montar(); setInterval(up, 1000); up();
+    </script>
+</body>
+</html>
