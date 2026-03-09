@@ -3,220 +3,99 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>QAP | Cronograma CFO PMMG</title>
+    <title>QAP | Cronograma PMMG</title>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
     <style>
-        :root {
-            --pm-navy: #002d5b; 
-            --pm-gold: #c5a059; 
-            --danger: #ff4d4d;
-            --success: #2ecc71;
-            --bg: #f0f2f5;
-        }
-
-        body {
-            font-family: 'Montserrat', sans-serif;
-            background-color: var(--bg);
-            margin: 0; padding: 0;
-            color: #333;
-        }
-
-        header {
-            background: linear-gradient(135deg, var(--pm-navy) 0%, #001a35 100%);
-            color: white;
-            padding: 40px 20px 80px;
-            text-align: center;
-            border-bottom: 5px solid var(--pm-gold);
-        }
-
-        .container {
-            max-width: 600px;
-            margin: -60px auto 50px;
-            padding: 0 15px;
-        }
-
-        .status-card {
-            background: white;
-            padding: 20px;
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
-            margin-bottom: 25px;
-            text-align: center;
-        }
-
+        :root { --pm-navy: #002d5b; --pm-gold: #c5a059; --danger: #ff4d4d; --bg: #f0f2f5; }
+        body { font-family: 'Montserrat', sans-serif; background-color: var(--bg); margin: 0; padding: 0; }
+        header { background: linear-gradient(135deg, var(--pm-navy) 0%, #001a35 100%); color: white; padding: 40px 20px 80px; text-align: center; border-bottom: 5px solid var(--pm-gold); }
+        .container { max-width: 600px; margin: -60px auto 50px; padding: 0 15px; }
+        .status-card { background: white; padding: 20px; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.15); margin-bottom: 25px; text-align: center; }
         #live-clock { font-size: 2.2rem; font-weight: 900; color: var(--pm-navy); margin: 0; }
         #date-display { color: var(--pm-gold); font-weight: bold; text-transform: capitalize; margin-top: 5px; }
-
-        .day-block {
-            background: white;
-            border-radius: 12px;
-            margin-bottom: 25px;
-            overflow: hidden;
-            border-left: 6px solid var(--pm-navy);
-            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
-        }
-
-        .day-header {
-            background: #f8f9fa;
-            padding: 15px 20px;
-            font-weight: 800;
-            color: var(--pm-navy);
-            border-bottom: 1px solid #eee;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
+        .day-block { background: white; border-radius: 12px; margin-bottom: 20px; overflow: hidden; border-left: 6px solid var(--pm-navy); box-shadow: 0 4px 10px rgba(0,0,0,0.05); }
+        .day-header { background: #f8f9fa; padding: 15px 20px; font-weight: 800; color: var(--pm-navy); border-bottom: 1px solid #eee; display: flex; justify-content: space-between; }
         .task-list { padding: 5px 20px; }
-
-        .task-item {
-            display: flex;
-            align-items: center;
-            padding: 15px 0;
-            border-bottom: 1px solid #f1f1f1;
-            cursor: pointer;
-            position: relative;
-        }
-
-        .task-item:last-child { border-bottom: none; }
-
-        input[type="checkbox"] {
-            width: 22px;
-            height: 22px;
-            margin-right: 15px;
-            accent-color: var(--pm-navy);
-            cursor: pointer;
-        }
-
-        .time-tag {
-            font-size: 0.8rem;
-            font-weight: 800;
-            background: #eee;
-            padding: 3px 7px;
-            border-radius: 4px;
-            margin-right: 12px;
-            color: #555;
-            min-width: 45px;
-            text-align: center;
-        }
-
-        .task-label { flex-grow: 1; font-weight: 600; font-size: 0.95rem; }
-
-        .overdue-badge {
-            background: var(--danger);
-            color: white;
-            font-size: 0.65rem;
-            padding: 3px 8px;
-            border-radius: 4px;
-            font-weight: 900;
-            display: none;
-            animation: pulse 1.5s infinite;
-            margin-left: 10px;
-        }
-
-        @keyframes pulse {
-            0% { opacity: 1; } 50% { opacity: 0.5; } 100% { opacity: 1; }
-        }
-
+        .task-item { display: flex; align-items: center; padding: 15px 0; border-bottom: 1px solid #f1f1f1; cursor: pointer; }
+        input[type="checkbox"] { width: 20px; height: 20px; margin-right: 15px; accent-color: var(--pm-navy); }
+        .time-tag { font-size: 0.8rem; font-weight: 800; background: #eee; padding: 3px 7px; border-radius: 4px; margin-right: 12px; min-width: 45px; text-align: center; }
+        .task-label { flex-grow: 1; font-weight: 600; }
+        .overdue-badge { background: var(--danger); color: white; font-size: 0.65rem; padding: 3px 8px; border-radius: 4px; font-weight: 900; display: none; margin-left: 10px; }
         input:checked ~ .task-label { text-decoration: line-through; color: #bbb; }
-        input:checked ~ .overdue-badge { display: none !important; }
-
-        footer { text-align: center; padding: 40px 20px; color: #999; font-size: 0.8rem; font-weight: bold; }
+        footer { text-align: center; padding: 40px; color: #999; font-size: 0.8rem; }
     </style>
 </head>
 <body>
-
-<header>
-    <i class="fas fa-shield-halved" style="color: var(--pm-gold); font-size: 2.5rem; margin-bottom: 10px;"></i>
-    <h1 style="margin: 0 0 5px;">ESTUDOS CFO PMMG</h1>
-    <p style="opacity: 0.9; font-weight: bold; letter-spacing: 1px;">RUMO À ACADEMIA (APM)</p>
-</header>
-
-<div class="container">
-    <div class="status-card">
-        <p id="live-clock">00:00:00</p>
-        <div id="date-display">Carregando dados oficiais...</div>
-    </div>
-
-    <div id="schedule-content">
+    <header>
+        <i class="fas fa-shield-halved" style="color: var(--pm-gold); font-size: 2.5rem; margin-bottom: 10px;"></i>
+        <h1>ESTUDOS CFO PMMG</h1>
+        <p>RUMO À ACADEMIA (APM)</p>
+    </header>
+    <div class="container">
+        <div class="status-card">
+            <p id="live-clock">00:00:00</p>
+            <div id="date-display">Iniciando...</div>
         </div>
-</div>
+        <div id="schedule-content"></div>
+    </div>
+    <footer>FORÇA E HONRA</footer>
 
-<footer>ESTUDE COM ESTRATÉGIA | FORÇA E HONRA</footer>
+    <script>
+        const cronograma = [
+            { dia: "Segunda-feira", id: 1, tarefas: [{h:"13:30", t:"Revisão 24h"}, {h:"13:45", t:"Português"}, {h:"14:45", t:"Dir. Constitucional"}, {h:"16:00", t:"Dir. Penal"}] },
+            { dia: "Terça-feira", id: 2, tarefas: [{h:"13:30", t:"Revisão 24h"}, {h:"13:45", t:"Português"}, {h:"14:45", t:"Dir. Administrativo"}, {h:"16:00", t:"Dir. Penal"}] },
+            { dia: "Quarta-feira", id: 3, tarefas: [{h:"13:30", t:"Revisão 24h"}, {h:"13:45", t:"Raciocínio Lógico"}, {h:"14:45", t:"Dir. Constitucional"}, {h:"16:00", t:"Criminologia"}] },
+            { dia: "Quinta-feira", id: 4, tarefas: [{h:"13:30", t:"Revisão 24h"}, {h:"13:45", t:"Inglês"}, {h:"14:45", t:"Dir. Administrativo"}, {h:"16:00", t:"Dir. Penal Militar"}] },
+            { dia: "Sexta-feira", id: 5, tarefas: [{h:"13:30", t:"Revisão Semanal"}, {h:"14:30", t:"Redação"}, {h:"16:00", t:"Dir. Civil"}, {h:"17:00", t:"Leg. Institucional"}] },
+            { dia: "Sábado", id: 6, tarefas: [{h:"09:00", t:"Simulado Geral"}, {h:"16:00", t:"Treino TAF"}] },
+            { dia: "Domingo", id: 0, tarefas: [{h:"10:00", t:"Planejamento"}, {h:"11:00", t:"Descanso"}] }
+        ];
 
-<script>
-    // Configuração do Cronograma Completo
-    const cronograma = [
-        { dia: "Segunda-feira", id: 1, tarefas: [
-            { h: "13:30", t: "Revisão 24h" }, { h: "13:45", t: "Língua Portuguesa" }, { h: "14:45", t: "Direito Constitucional" }, { h: "16:00", t: "Direito Penal" }, { h: "17:00", t: "Direito Processual Penal" }
-        ]},
-        { dia: "Terça-feira", id: 2, tarefas: [
-            { h: "13:30", t: "Revisão 24h" }, { h: "13:45", t: "Língua Portuguesa" }, { h: "14:45", t: "Direito Administrativo" }, { h: "16:00", t: "Direito Penal" }, { h: "17:00", t: "Direito Processual Penal" }
-        ]},
-        { dia: "Quarta-feira", id: 3, tarefas: [
-            { h: "13:30", t: "Revisão 24h" }, { h: "13:45", t: "Raciocínio Lógico" }, { h: "14:45", t: "Direito Constitucional" }, { h: "16:00", t: "Legislação Extravagante" }, { h: "17:00", t: "Criminologia" }
-        ]},
-        { dia: "Quinta-feira", id: 4, tarefas: [
-            { h: "13:30", t: "Revisão 24h" }, { h: "13:45", t: "Língua Inglesa" }, { h: "14:45", t: "Direito Administrativo" }, { h: "16:00", t: "Direito Penal Militar" }, { h: "17:00", t: "Proc. Penal Militar" }
-        ]},
-        { dia: "Sexta-feira", id: 5, tarefas: [
-            { h: "13:30", t: "Revisão Semanal" }, { h: "14:30", t: "Produção de Texto (Redação)" }, { h: "16:00", t: "Direito Civil" }, { h: "17:00", t: "Legislação Institucional" }
-        ]},
-        { dia: "Sábado", id: 6, tarefas: [
-            { h: "09:00", t: "Simulado Geral CFO" }, { h: "14:00", t: "Análise de Erros e Revisão" }, { h: "16:00", t: "Treino Físico (TAF)" }
-        ]},
-        { dia: "Domingo", id: 0, tarefas: [
-            { h: "10:00", t: "Organização da Semana" }, { h: "11:00", t: "Descanso / Lazer Ativo" }
-        ]}
-    ];
-
-    function renderizar() {
-        const container = document.getElementById('schedule-content');
-        container.innerHTML = cronograma.map(dia => `
-            <div class="day-block">
-                <div class="day-header">${dia.dia} <i class="fas fa-calendar-check" style="opacity:0.3"></i></div>
-                <div class="task-list" data-weekday="${dia.id}">
-                    ${dia.tarefas.map(tarefa => {
-                        const taskId = `task-${dia.id}-${tarefa.h}`;
-                        const isChecked = localStorage.getItem(taskId) === 'true' ? 'checked' : '';
-                        return `
-                        <label class="task-item">
-                            <input type="checkbox" onchange="save('${taskId}', this.checked)" ${isChecked}>
-                            <span class="time-tag" data-time="${tarefa.h}">${tarefa.h}</span>
-                            <span class="task-label">${tarefa.t}</span>
-                            <span class="overdue-badge">EM ATRASO</span>
-                        </label>
-                    `}).join('')}
+        function render() {
+            const html = cronograma.map(dia => `
+                <div class="day-block">
+                    <div class="day-header">${dia.dia}</div>
+                    <div class="task-list" data-weekday="${dia.id}">
+                        ${dia.tarefas.map(t => {
+                            const id = `t-${dia.id}-${t.h}`;
+                            const checked = localStorage.getItem(id) === 'true' ? 'checked' : '';
+                            return `<label class="task-item">
+                                <input type="checkbox" onchange="localStorage.setItem('${id}', this.checked); update();" ${checked}>
+                                <span class="time-tag">${t.h}</span>
+                                <span class="task-label">${t.t}</span>
+                                <span class="overdue-badge">ATRASADO</span>
+                            </label>`;
+                        }).join('')}
+                    </div>
                 </div>
-            </div>
-        `).join('');
-    }
+            `).join('');
+            document.getElementById('schedule-content').innerHTML = html;
+        }
 
-    // Salva no navegador do usuário
-    function save(id, value) { 
-        localStorage.setItem(id, value); 
-        updateLogic(); 
-    }
+        function update() {
+            const now = new Date();
+            document.getElementById('live-clock').innerText = now.toLocaleTimeString('pt-BR');
+            document.getElementById('date-display').innerText = now.toLocaleDateString('pt-BR', {weekday:'long', day:'numeric', month:'long'});
+            
+            const curDay = now.getDay();
+            const curH = now.getHours();
+            const curM = now.getMinutes();
 
-    function updateLogic() {
-        const now = new Date();
-        document.getElementById('live-clock').innerText = now.toLocaleTimeString('pt-BR');
-        
-        const options = { weekday: 'long', day: 'numeric', month: 'long' };
-        document.getElementById('date-display').innerText = now.toLocaleDateString('pt-BR', options);
+            document.querySelectorAll('.task-item').forEach(item => {
+                const dayId = parseInt(item.closest('.task-list').dataset.weekday);
+                const [h, m] = item.querySelector('.time-tag').innerText.split(':').map(Number);
+                const checked = item.querySelector('input').checked;
+                const badge = item.querySelector('.overdue-badge');
+                if (curDay === dayId && !checked && (curH > h || (curH === h && curM >= m))) {
+                    badge.style.display = 'inline-block';
+                } else { badge.style.display = 'none'; }
+            });
+        }
 
-        const curDay = now.getDay();
-        const curH = now.getHours();
-        const curM = now.getMinutes();
-
-        document.querySelectorAll('.task-item').forEach(item => {
-            const list = item.closest('.task-list');
-            const dayId = parseInt(list.dataset.weekday);
-            const timeStr = item.querySelector('.time-tag').dataset.time;
-            const [h, m] = timeStr.split(':').map(Number);
-            const isChecked = item.querySelector('input').checked;
-            const badge = item.querySelector('.overdue-badge');
-
-            // Se for hoje, não estiver marcado e a
+        render();
+        setInterval(update, 1000);
+        update();
+    </script>
+</body>
+</html>
