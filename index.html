@@ -24,7 +24,6 @@
             color: #2d3436;
         }
 
-        /* Header Estilizado */
         header {
             background: linear-gradient(135deg, var(--navy) 0%, var(--navy-light) 100%);
             color: white;
@@ -34,26 +33,28 @@
             clip-path: ellipse(150% 100% at 50% 0%);
         }
 
-        .pmmg-brand { font-size: 3.5rem; font-weight: 900; letter-spacing: 10px; margin: 0; color: var(--gold); text-shadow: 2px 2px 4px rgba(0,0,0,0.3); }
-        header h1 { font-size: 1.2rem; margin: 10px 0; opacity: 0.9; text-transform: uppercase; }
+        .pmmg-brand { font-size: 3rem; font-weight: 900; letter-spacing: 10px; margin: 0; color: var(--gold); text-shadow: 2px 2px 4px rgba(0,0,0,0.3); }
+        header h1 { font-size: 1rem; margin: 10px 0; opacity: 0.9; text-transform: uppercase; }
 
-        /* Navegação em Pílulas */
         nav {
             display: flex;
             justify-content: center;
             gap: 10px;
             margin-top: -30px;
             padding: 0 10px;
+            position: sticky;
+            top: 20px;
+            z-index: 100;
         }
 
         nav a {
             background: var(--white);
             color: var(--navy);
-            padding: 12px 20px;
+            padding: 12px 18px;
             border-radius: 50px;
             text-decoration: none;
             font-weight: 800;
-            font-size: 0.7rem;
+            font-size: 0.65rem;
             text-transform: uppercase;
             box-shadow: 0 4px 15px rgba(0,0,0,0.1);
             transition: 0.3s;
@@ -64,7 +65,6 @@
 
         .container { max-width: 600px; margin: 30px auto 100px; padding: 0 20px; }
 
-        /* Card de Status */
         .status-card {
             background: var(--white);
             padding: 25px;
@@ -74,82 +74,45 @@
             margin-bottom: 30px;
         }
 
-        #clock { font-size: 3rem; font-weight: 900; color: var(--navy); display: block; }
+        #clock { font-size: 2.5rem; font-weight: 900; color: var(--navy); display: block; }
         #current-day-display { font-weight: 800; color: var(--gold); text-transform: uppercase; letter-spacing: 2px; }
 
-        /* CARDS DE MATÉRIA ULTRA MODERNOS */
+        /* CARDS DE MATÉRIA */
         .task-card {
             background: var(--white);
             border-radius: 18px;
             margin-bottom: 15px;
-            padding: 20px;
+            padding: 18px;
             display: flex;
             align-items: center;
-            gap: 20px;
+            gap: 15px;
             border: 2px solid transparent;
-            transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            box-shadow: 0 4px 6px rgba(0,0,0,0.02);
-        }
-
-        .task-card:hover { transform: scale(1.02); box-shadow: 0 15px 30px rgba(0,0,0,0.08); }
-
-        /* Estado: Concluído */
-        .task-card.completed {
-            background: #f8f9fa;
-            border-color: var(--success);
-            opacity: 0.7;
-        }
-        .task-card.completed .icon-box { background: var(--success); color: white; }
-
-        /* Estado: Atrasado */
-        .task-card.overdue {
-            border-color: var(--danger);
-            background: #fff5f5;
-            animation: pulse-danger 2s infinite;
-        }
-
-        @keyframes pulse-danger {
-            0% { box-shadow: 0 0 0 0 rgba(255, 77, 77, 0.4); }
-            70% { box-shadow: 0 0 0 15px rgba(255, 77, 77, 0); }
-            100% { box-shadow: 0 0 0 0 rgba(255, 77, 77, 0); }
-        }
-
-        .icon-box {
-            width: 50px; height: 50px;
-            background: #edf2f7;
-            border-radius: 12px;
-            display: flex;
-            align-items: center; justify-content: center;
-            font-size: 1.2rem; color: var(--navy);
-            flex-shrink: 0;
-        }
-
-        .task-content { flex-grow: 1; }
-        .task-name { font-weight: 800; font-size: 1rem; color: var(--navy); display: block; margin-bottom: 4px; }
-        .task-obs { font-size: 0.75rem; color: #718096; font-weight: 600; display: block; }
-        .task-time { font-size: 0.65rem; font-weight: 900; color: var(--gold); text-transform: uppercase; }
-
-        .check-btn {
-            width: 30px; height: 30px;
-            border-radius: 50%;
-            border: 3px solid #e2e8f0;
-            cursor: pointer;
-            display: flex;
-            align-items: center; justify-content: center;
             transition: 0.3s;
         }
 
-        input[type="checkbox"] { display: none; }
-        input[type="checkbox"]:checked + .check-btn {
-            background: var(--success);
-            border-color: var(--success);
-            color: white;
+        .task-card.completed { border-color: var(--success); opacity: 0.6; background: #f8f9fa; }
+        .task-card.overdue { border-color: var(--danger); background: #fff5f5; animation: pulse-danger 2s infinite; }
+
+        @keyframes pulse-danger {
+            0% { box-shadow: 0 0 0 0 rgba(255, 77, 77, 0.4); }
+            70% { box-shadow: 0 0 0 10px rgba(255, 77, 77, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(255, 77, 77, 0); }
         }
+
+        .icon-box { width: 45px; height: 45px; background: #edf2f7; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.1rem; color: var(--navy); flex-shrink: 0; }
+        .task-content { flex-grow: 1; }
+        .task-name { font-weight: 800; font-size: 0.95rem; color: var(--navy); display: block; }
+        .task-obs { font-size: 0.75rem; color: #718096; font-weight: 600; display: block; }
+        .task-time { font-size: 0.65rem; font-weight: 900; color: var(--gold); text-transform: uppercase; }
+
+        .check-btn { width: 28px; height: 28px; border-radius: 50%; border: 2px solid #e2e8f0; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: 0.3s; }
+        input[type="checkbox"] { display: none; }
+        input[type="checkbox"]:checked + .check-btn { background: var(--success); border-color: var(--success); color: white; }
 
         /* ABA EVOLUÇÃO */
         .progresso-container { text-align: center; }
         .circle-progress {
-            width: 150px; height: 150px;
+            width: 140px; height: 140px;
             border-radius: 50%;
             background: conic-gradient(var(--gold) 0%, #eee 0%);
             margin: 20px auto;
@@ -160,52 +123,42 @@
         .circle-progress::after {
             content: attr(data-value);
             position: absolute;
-            width: 120px; height: 120px;
+            width: 115px; height: 115px;
             background: white;
             border-radius: 50%;
             display: flex;
             align-items: center; justify-content: center;
-            font-size: 2rem; font-weight: 900; color: var(--navy);
+            font-size: 1.8rem; font-weight: 900; color: var(--navy);
         }
 
-        .materia-prog-row {
-            background: white; padding: 15px; border-radius: 15px; margin-bottom: 10px;
+        .materia-prog-card {
+            background: white; padding: 15px 20px; border-radius: 15px; margin-bottom: 12px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.03);
             display: flex; justify-content: space-between; align-items: center;
+            border-left: 5px solid var(--navy);
         }
 
-        /* Botão Próximo Dia */
-        .next-day-area { margin-top: 40px; text-align: center; }
-        .btn-next {
-            background: var(--navy); color: white; border: none;
-            padding: 18px 40px; border-radius: 50px;
-            font-weight: 900; font-size: 1rem; cursor: pointer;
-            box-shadow: 0 10px 20px rgba(0,51,102,0.2);
-            transition: 0.3s;
-        }
-        .btn-next:disabled { background: #cbd5e0; cursor: not-allowed; box-shadow: none; }
-
+        /* Paginação */
         .page { display: none; }
-        .page.active { display: block; animation: slideUp 0.4s ease; }
-        @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        .page.active { display: block; animation: fadeIn 0.4s ease; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
-        /* Modal Questões */
-        .modal {
-            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.7); z-index: 1000; backdrop-filter: blur(5px);
-        }
-        .modal-content {
-            background: white; width: 85%; max-width: 350px; margin: 20vh auto;
-            padding: 30px; border-radius: 25px; text-align: center;
-        }
-        .modal input { width: 100%; padding: 15px; margin: 10px 0; border: 2px solid #eee; border-radius: 12px; box-sizing: border-box; font-size: 1rem; }
-        .modal button { background: var(--navy); color: white; border: none; padding: 15px; border-radius: 12px; width: 100%; font-weight: 900; cursor: pointer; }
+        .next-day-area { margin-top: 30px; text-align: center; }
+        .btn-next { background: var(--navy); color: white; border: none; padding: 15px 35px; border-radius: 50px; font-weight: 900; font-size: 0.9rem; cursor: pointer; transition: 0.3s; width: 100%; }
+        .btn-next:disabled { background: #cbd5e0; cursor: not-allowed; }
+
+        /* Modal */
+        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); z-index: 1000; backdrop-filter: blur(5px); }
+        .modal-content { background: white; width: 85%; max-width: 320px; margin: 20vh auto; padding: 30px; border-radius: 20px; text-align: center; }
+        .modal input { width: 100%; padding: 12px; margin: 10px 0; border: 2px solid #eee; border-radius: 10px; box-sizing: border-box; font-size: 1rem; text-align: center; }
+        .modal button { background: var(--navy); color: white; border: none; padding: 15px; border-radius: 10px; width: 100%; font-weight: 900; cursor: pointer; margin-top: 10px; }
     </style>
 </head>
 <body>
 
 <header>
     <p class="pmmg-brand">PMMG</p>
-    <h1>Área do Aluno • CFO 2026</h1>
+    <h1>Área do Aluno • MISSÃO CFO 2026</h1>
 </header>
 
 <nav>
@@ -223,86 +176,91 @@
             <small id="date-text" style="color:#a0aec0; font-weight:bold;"></small>
         </div>
 
-        <div id="tasks-container">
-            </div>
+        <div id="tasks-container"></div>
 
         <div class="next-day-area">
             <button class="btn-next" id="btn-proximo" onclick="avancarDia()" disabled>
-                CUMPRIR MISSÃO E AVANÇAR <i class="fas fa-arrow-right"></i>
+                CUMPRIR MISSÃO DO DIA <i class="fas fa-arrow-right"></i>
             </button>
             <p id="lock-msg" style="font-size: 0.7rem; color: #a0aec0; margin-top: 10px; font-weight: bold;">
-                (Bloqueado: Complete todas as tarefas de hoje)
+                (Bloqueado: Complete todas as tarefas acima)
             </p>
         </div>
     </div>
 
     <div id="page-evolucao" class="page">
         <div class="status-card progresso-container">
-            <h2 style="margin:0; color:var(--navy)">Progresso Global</h2>
+            <h2 style="margin:0; color:var(--navy); font-size: 1.2rem;">Progresso Global do Edital</h2>
             <div class="circle-progress" id="global-circle" data-value="0%"></div>
-            <p style="font-size: 0.8rem; font-weight: bold; color: #718096;">Rumo ao Edital Batido!</p>
+            <p style="font-size: 0.75rem; font-weight: bold; color: #718096; text-transform: uppercase;">Meta: Prova Dezembro 2026</p>
         </div>
-        <div id="materias-evolucao-list">
-            </div>
+        <div id="materias-evolucao-list"></div>
     </div>
 
     <div id="page-questoes" class="page">
         <div class="status-card">
-            <h2 style="margin:0; color:var(--navy)">Seu Ranking</h2>
-            <div style="display: flex; justify-content: space-around; margin-top: 20px;">
-                <div><span id="total-q" style="font-size: 2rem; font-weight: 900; color: var(--navy);">0</span><br><small>FEITAS</small></div>
-                <div><span id="perc-q" style="font-size: 2rem; font-weight: 900; color: var(--success);">0%</span><br><small>ACERTO</small></div>
+            <h2 style="margin:0; color:var(--navy); font-size: 1.2rem;">Seu Ranking de Performance</h2>
+            <div style="display: flex; justify-content: space-around; margin-top: 25px;">
+                <div style="text-align: center;">
+                    <span id="total-q" style="font-size: 2.2rem; font-weight: 900; color: var(--navy);">0</span>
+                    <br><small style="font-weight: 800; color: #cbd5e0;">RESOLVIDAS</small>
+                </div>
+                <div style="text-align: center;">
+                    <span id="perc-q" style="font-size: 2.2rem; font-weight: 900; color: var(--success);">0%</span>
+                    <br><small style="font-weight: 800; color: #cbd5e0;">ACERTO MÉDIO</small>
+                </div>
             </div>
         </div>
+        <button onclick="localStorage.clear(); location.reload();" style="width: 100%; border: none; background: none; color: #a0aec0; font-weight: bold; font-size: 0.7rem; cursor: pointer;">Limpar Todos os Dados</button>
     </div>
 </div>
 
 <div id="modal-q" class="modal">
     <div class="modal-content">
-        <i class="fas fa-edit" style="font-size: 2rem; color: var(--gold);"></i>
-        <h3>Resultado do Bloco</h3>
+        <i class="fas fa-pen-to-square" style="font-size: 2rem; color: var(--gold); margin-bottom: 10px;"></i>
+        <h3 style="margin: 0; color: var(--navy);">QAP! Resultado:</h3>
         <input type="number" id="in-tot" placeholder="Total de questões">
         <input type="number" id="in-hit" placeholder="Número de acertos">
-        <button onclick="salvarQuestao()">SALVAR NO HISTÓRICO</button>
+        <button onclick="salvarQuestao()">GRAVAR RESULTADO</button>
     </div>
 </div>
 
 <script>
     const cronograma = {
-        1: { d: "Segunda-feira", icon: "fa-book-open", tarefas: [
+        1: { d: "Segunda-feira", tarefas: [
             { h: "13:30", m: "Revisão Processo Penal", o: "Revisão 24h", i: "fa-history" },
             { h: "13:45", m: "Português", o: "Morfologia (Pág 1-15) + 10Q", i: "fa-language", q: true },
             { h: "14:45", m: "Dir. Constitucional", o: "Princípios (Pág 1-12) + 10Q", i: "fa-balance-scale", q: true },
             { h: "16:00", m: "Direito Penal", o: "Lei Penal no Tempo + 5Q", i: "fa-gavel", q: true },
             { h: "17:00", m: "Processo Penal", o: "Inquérito Policial + 15Q", i: "fa-handcuffs", q: true }
         ]},
-        2: { d: "Terça-feira", icon: "fa-gavel", tarefas: [
+        2: { d: "Terça-feira", tarefas: [
             { h: "13:30", m: "Revisão Penal", o: "Revisão 24h", i: "fa-history" },
             { h: "13:45", m: "Português", o: "Morfologia (Pág 16-30) + 10Q", i: "fa-language", q: true },
             { h: "14:45", m: "Dir. Constitucional", o: "Direitos Individuais + 10Q", i: "fa-balance-scale", q: true },
             { h: "16:00", m: "Dir. Administrativo", o: "Regime Jurídico + 5Q", i: "fa-university", q: true },
             { h: "17:00", m: "Processo Civil", o: "Normas Processuais + 15Q", i: "fa-file-signature", q: true }
         ]},
-        3: { d: "Quarta-feira", icon: "fa-shield-alt", tarefas: [
+        3: { d: "Quarta-feira", tarefas: [
             { h: "13:30", m: "Revisão Administrativo", o: "Revisão 24h", i: "fa-history" },
             { h: "13:45", m: "Português", o: "Semântica + 10Q", i: "fa-language", q: true },
             { h: "14:45", m: "Dir. Constitucional", o: "Controle de Const. + 10Q", i: "fa-balance-scale", q: true },
             { h: "16:00", m: "Direito Penal", o: "Teoria do Crime + 5Q", i: "fa-gavel", q: true },
             { h: "17:00", m: "Legislação Extravagante", o: "Leis Especiais + 15Q", i: "fa-id-badge", q: true }
         ]},
-        4: { d: "Quinta-feira", icon: "fa-user-tie", tarefas: [
+        4: { d: "Quinta-feira", tarefas: [
             { h: "13:30", m: "Revisão Civil", o: "Revisão 24h", i: "fa-history" },
             { h: "13:45", m: "Português", o: "Sintaxe + 10Q", i: "fa-language", q: true },
             { h: "14:45", m: "Dir. Constitucional", o: "Poder Judiciário + 10Q", i: "fa-balance-scale", q: true },
             { h: "16:00", m: "Processo Penal", o: "Ação Penal + 5Q", i: "fa-handcuffs", q: true },
             { h: "17:00", m: "Dir. Administrativo", o: "Atos Admin + 15Q", i: "fa-university", q: true }
         ]},
-        5: { d: "Sexta-feira", icon: "fa-medal", tarefas: [
+        5: { d: "Sexta-feira", tarefas: [
             { h: "13:30", m: "Revisão Constitucional", o: "Revisão 24h", i: "fa-history" },
             { h: "13:45", m: "Português", o: "Redação + 20Q", i: "fa-pen-fancy", q: true },
             { h: "14:45", m: "Dir. Constitucional", o: "Org. do Estado + 20Q", i: "fa-balance-scale", q: true },
             { h: "16:00", m: "Direito Civil", o: "Sujeitos do Processo + 5Q", i: "fa-file-signature", q: true },
-            { h: "17:40", m: "Revisão Semanal", o: "Pontos Fracos", i: "fa-chart-pie" }
+            { h: "17:40", m: "Revisão Semanal", o: "Geral", i: "fa-chart-pie" }
         ]}
     };
 
@@ -351,10 +309,8 @@
     }
 
     function salvarQuestao() {
-        const t = document.getElementById('in-tot').value;
-        const h = document.getElementById('in-hit').value;
-        localStorage.setItem(activeQId + '-tot', t);
-        localStorage.setItem(activeQId + '-hit', h);
+        localStorage.setItem(activeQId + '-tot', document.getElementById('in-tot').value);
+        localStorage.setItem(activeQId + '-hit', document.getElementById('in-hit').value);
         document.getElementById('modal-q').style.display = 'none';
         updateStats();
     }
@@ -368,13 +324,17 @@
         const isDone = done === total;
         document.getElementById('btn-proximo').disabled = !isDone;
         document.getElementById('lock-msg').style.display = isDone ? 'none' : 'block';
-        updateEvolucaoUI();
     }
 
     function avancarDia() {
+        // Incrementa o contador de dias concluídos para o progresso global
+        let totalFeitos = parseInt(localStorage.getItem('totalDiasFeitos')) || 0;
+        localStorage.setItem('totalDiasFeitos', totalFeitos + 1);
+
         currentDay = currentDay < 5 ? currentDay + 1 : 1;
         localStorage.setItem('dayIndex', currentDay);
         renderMissao();
+        window.scrollTo(0,0);
     }
 
     function switchTab(tab) {
@@ -382,14 +342,13 @@
         document.querySelectorAll('nav a').forEach(a => a.classList.remove('active'));
         document.getElementById('page-' + tab).classList.add('active');
         document.getElementById('tab-' + tab).classList.add('active');
+        
         if(tab === 'evolucao') updateEvolucaoUI();
         if(tab === 'questoes') updateStats();
     }
 
     function updateEvolucaoUI() {
-        // Cálculo de progresso baseado em 12 semanas (84 dias)
-        // Como o sistema é cíclico, vamos simular o avanço total
-        const totalDiasEdital = 60; // 12 semanas úteis
+        const totalDiasEdital = 120; // Estimativa de 120 dias de estudo até a prova
         const diasConcluidos = parseInt(localStorage.getItem('totalDiasFeitos')) || 0;
         const percGlobal = Math.min(Math.round((diasConcluidos / totalDiasEdital) * 100), 100);
         
@@ -397,12 +356,11 @@
         circle.style.background = `conic-gradient(var(--gold) ${percGlobal}%, #eee 0%)`;
         circle.setAttribute('data-value', percGlobal + '%');
 
-        // Evolução por Matéria
-        const materias = ["Português", "Dir. Constitucional", "Direito Penal", "Dir. Administrativo"];
+        const materias = ["Português", "Dir. Constitucional", "Direito Penal", "Dir. Administrativo", "Processo Penal", "Processo Civil"];
         document.getElementById('materias-evolucao-list').innerHTML = materias.map(m => `
-            <div class="materia-prog-row">
-                <span style="font-weight:800; font-size:0.8rem; color:var(--navy)">${m}</span>
-                <span style="font-weight:900; color:var(--gold)">${Math.floor(percGlobal * 0.8)}%</span>
+            <div class="materia-prog-card">
+                <span style="font-weight:800; font-size:0.75rem; color:var(--navy); text-transform: uppercase;">${m}</span>
+                <span style="font-weight:900; color:var(--gold); font-size: 0.9rem;">${Math.min(100, Math.floor(percGlobal * (1 + Math.random()*0.2)))}%</span>
             </div>
         `).join('');
     }
