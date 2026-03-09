@@ -3,188 +3,69 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Área do Aluno - CFO/MG | PMMG</title>
+    <title>Área do Aluno - CFO/MG</title>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        :root { 
-            --pm-gold: #C5A059; /* Dourado Oficial PMMG */
-            --pm-navy: #003366; 
-            --danger: #ff4d4d;
-            --success: #2ecc71;
-            --bg: #f0f2f5;
-        }
+        :root { --gold: #C5A059; --navy: #003366; --bg: #f4f7f6; --success: #2ecc71; }
+        body { font-family: 'Montserrat', sans-serif; background: var(--bg); margin: 0; padding: 0; }
+        
+        /* Cabeçalho Premium */
+        header { background: var(--gold); padding: 30px 20px; text-align: center; border-bottom: 5px solid var(--navy); }
+        .logo-text { font-size: 2.5rem; font-weight: 900; color: var(--navy); letter-spacing: 5px; margin: 0; }
+        header h1 { margin: 5px 0; font-size: 1.5rem; color: #333; }
+        header p { margin: 0; color: white; font-weight: bold; letter-spacing: 2px; text-transform: uppercase; font-size: 0.8rem; }
 
-        body {
-            font-family: 'Montserrat', sans-serif;
-            background-color: var(--bg);
-            margin: 0; padding: 0;
-            color: #333;
-        }
+        /* Menu */
+        nav { background: var(--navy); display: flex; justify-content: center; padding: 12px; gap: 30px; }
+        nav a { color: white; text-decoration: none; font-weight: 700; font-size: 0.85rem; text-transform: uppercase; }
+        nav a:hover { color: var(--gold); }
 
-        header {
-            background: var(--pm-gold); /* Fundo Dourado */
-            color: black;
-            padding: 40px 20px 80px;
-            text-align: center;
-            border-bottom: 5px solid var(--pm-navy);
-            position: relative;
-        }
+        .container { max-width: 1200px; margin: 20px auto; padding: 0 20px; }
+        
+        /* Relógio Centralizado */
+        .status-bar { background: white; padding: 15px; border-radius: 12px; box-shadow: 0 5px 15px rgba(0,0,0,0.05); text-align: center; margin-bottom: 25px; }
+        #clock { font-size: 2rem; font-weight: 900; color: var(--navy); margin: 0; }
+        #date { color: #888; font-weight: bold; text-transform: capitalize; }
 
-        .pmmg-text {
-            font-size: 2.2rem;
-            font-weight: 900;
-            color: var(--pm-navy);
-            letter-spacing: 5px;
-            margin-bottom: 5px;
-            text-transform: uppercase;
-        }
+        /* Layout em Colunas (Dashboard) */
+        .dashboard-grid { display: flex; flex-wrap: wrap; gap: 20px; align-items: flex-start; }
+        .col-left { flex: 2; min-width: 300px; display: flex; flex-direction: column; gap: 20px; }
+        .col-right { flex: 1; min-width: 300px; }
 
-        header h1 { margin: 5px 0; font-size: 1.8rem; font-weight: 900; }
-        header p { margin: 0; color: white; font-weight: 800; letter-spacing: 2px; }
-
-        nav {
-            background: var(--pm-navy);
-            padding: 10px 0;
-            text-align: center;
-        }
-
-        nav a {
-            color: white;
-            text-decoration: none;
-            font-weight: 700;
-            margin: 0 15px;
-            text-transform: uppercase;
-            font-size: 0.9rem;
-        }
-
-        .container {
-            max-width: 600px;
-            margin: -60px auto 50px;
-            padding: 0 15px;
-        }
-
-        .status-card {
-            background: white;
-            padding: 20px;
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
-            margin-bottom: 25px;
-            text-align: center;
-        }
-
-        #live-clock { font-size: 2.2rem; font-weight: 900; color: var(--pm-navy); margin: 0; }
-        #date-display { color: #666; font-weight: bold; text-transform: capitalize; margin-top: 5px; }
-
-        .study-grid {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 20px;
-            margin-bottom: 25px;
-        }
-
-        .study-box {
-            background: white;
-            border-radius: 12px;
-            overflow: hidden;
-            border-left: 6px solid var(--pm-navy);
-            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
-        }
-
-        .box-header {
-            background: #f8f9fa;
-            padding: 15px 20px;
-            font-weight: 800;
-            color: var(--pm-navy);
-            border-bottom: 1px solid #eee;
-            text-transform: uppercase;
-        }
-
-        .task-list { padding: 5px 20px; }
-
-        .task-item {
-            display: flex;
-            align-items: center;
-            padding: 15px 0;
-            border-bottom: 1px solid #f1f1f1;
-            cursor: pointer;
-            position: relative;
-        }
-
+        .study-box { background: white; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.05); border-top: 5px solid var(--navy); }
+        .box-header { background: #f8f9fa; padding: 15px 20px; font-weight: 800; color: var(--navy); border-bottom: 1px solid #eee; display: flex; justify-content: space-between; }
+        
+        .task-list { padding: 10px 0; }
+        .task-item { display: flex; align-items: center; padding: 12px 20px; border-bottom: 1px solid #f1f1f1; cursor: pointer; }
         .task-item:last-child { border-bottom: none; }
+        
+        input[type="checkbox"] { width: 20px; height: 20px; margin-right: 15px; accent-color: var(--navy); }
+        .time { font-size: 0.75rem; font-weight: 900; background: var(--navy); color: white; padding: 3px 7px; border-radius: 4px; margin-right: 12px; }
+        .task-label { font-weight: 600; font-size: 0.9rem; flex-grow: 1; }
 
-        input[type="checkbox"] {
-            width: 22px;
-            height: 22px;
-            margin-right: 15px;
-            accent-color: var(--pm-navy);
-            cursor: pointer;
-        }
+        /* Card de Questões (Estatísticas) */
+        .stats-card { background: white; padding: 25px; border-radius: 15px; box-shadow: 0 8px 25px rgba(0,0,0,0.1); border-left: 8px solid var(--gold); }
+        .stats-card h3 { margin: 0 0 20px; color: var(--navy); display: flex; align-items: center; gap: 10px; }
+        .stat-row { display: flex; justify-content: space-between; margin-bottom: 15px; text-align: center; }
+        .stat-val { display: block; font-size: 1.8rem; font-weight: 900; color: var(--navy); }
+        .stat-lbl { font-size: 0.7rem; color: #888; font-weight: bold; text-transform: uppercase; }
 
-        .time-tag {
-            font-size: 0.8rem;
-            font-weight: 800;
-            background: var(--pm-navy);
-            color: white;
-            padding: 3px 7px;
-            border-radius: 4px;
-            margin-right: 12px;
-            color: white;
-            min-width: 45px;
-            text-align: center;
-        }
+        /* Modal */
+        .modal { display: none; position: fixed; z-index: 999; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); }
+        .modal-content { background: white; width: 90%; max-width: 350px; margin: 15vh auto; padding: 25px; border-radius: 15px; text-align: center; border-top: 8px solid var(--gold); }
+        .modal h2 { color: var(--navy); margin-top: 0; }
+        .modal input { width: 100%; padding: 12px; margin: 10px 0; border: 1px solid #ddd; border-radius: 8px; box-sizing: border-box; font-size: 1rem; }
+        .modal button { background: var(--navy); color: white; border: none; padding: 12px 25px; border-radius: 8px; font-weight: bold; cursor: pointer; width: 100%; margin-top: 10px; }
 
-        .task-label { flex-grow: 1; font-weight: 600; font-size: 0.95rem; }
-
-        .modal {
-            display: none;
-            position: fixed;
-            z-index: 1000;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            overflow: auto;
-            background-color: rgba(0,0,0,0.4);
-        }
-
-        .modal-content {
-            background-color: white;
-            margin: 15% auto;
-            padding: 20px;
-            border-radius: 10px;
-            width: 80%;
-            max-width: 400px;
-            text-align: center;
-        }
-
-        .modal h2 { color: var(--pm-navy); }
-        .modal input { width: 80%; padding: 10px; margin: 10px 0; border: 1px solid #ccc; border-radius: 5px; }
-        .modal button { background-color: var(--pm-gold); color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; }
-
-        .stats-box {
-            background: white;
-            padding: 25px;
-            border-radius: 12px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
-            text-align: center;
-            margin-bottom: 25px;
-        }
-
-        .stats-box h3 { color: var(--pm-navy); }
-        .stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 20px; }
-        .stat-item { background: #f8f9fa; padding: 15px; border-radius: 10px; }
-        .stat-item span { font-size: 1.5rem; font-weight: 900; color: var(--pm-navy); }
-
-        footer { text-align: center; padding: 40px 20px; color: #999; font-size: 0.8rem; font-weight: bold; }
+        @media (max-width: 768px) { .dashboard-grid { flex-direction: column; } .col-left, .col-right { width: 100%; flex: none; } }
     </style>
 </head>
 <body>
 
 <header>
-    <div class="pmmg-text">PMMG</div>
+    <p class="logo-text">PMMG</p>
     <h1>Área do Aluno - CFO/MG</h1>
-    <p>RUMO À GLORIOSA</p>
+    <p>Rumo à Gloriosa</p>
 </header>
 
 <nav>
@@ -194,162 +75,136 @@
 </nav>
 
 <div class="container">
-    <div class="status-card">
-        <p id="live-clock">00:00:00</p>
-        <div id="date-display">Carregando dados oficiais...</div>
+    <div class="status-bar">
+        <p id="clock">00:00:00</p>
+        <div id="date">Segunda-Feira, 9 de Março</div>
     </div>
 
-    <div class="study-grid">
-        <div class="study-box">
-            <div class="box-header">TEORIA</div>
-            <div class="task-list" id="theory-content">
-                </div>
-        </div>
-        <div class="study-box">
-            <div class="box-header">ATIVIDADE</div>
-            <div class="task-list" id="activity-content">
-                </div>
-        </div>
-    </div>
-
-    <div class="stats-box">
-        <h3>📊 RESUMO GERAL DE QUESTÕES</h3>
-        <div class="stats-grid">
-            <div class="stat-item">
-                <span id="total-questions">0</span>
-                <p>Questões Totais Realizadas</p>
+    <div class="dashboard-grid">
+        <div class="col-left">
+            <div class="study-box">
+                <div class="box-header">TEORIA <i class="fas fa-book"></i></div>
+                <div class="task-list" id="theory-list"></div>
             </div>
-            <div class="stat-item">
-                <span id="overall-percentage">0%</span>
-                <p>Índice Geral de Acerto</p>
+            
+            <div class="study-box">
+                <div class="box-header">ATIVIDADE <i class="fas fa-pen-nib"></i></div>
+                <div class="task-list" id="activity-list"></div>
+            </div>
+        </div>
+
+        <div class="col-right">
+            <div class="stats-card">
+                <h3>📊 RESUMO GERAL</h3>
+                <div class="stat-row">
+                    <div><span class="stat-val" id="total-q">0</span><span class="stat-lbl">Questões</span></div>
+                    <div><span class="stat-val" id="perc-q">0%</span><span class="stat-lbl">Acerto</span></div>
+                </div>
+                <div style="border-top: 1px solid #eee; padding-top: 15px; margin-top: 15px;">
+                    <div style="display: flex; justify-content: space-between; font-size: 0.8rem; margin-bottom: 8px;">
+                        <strong>Constitucional</strong> <span id="const-perc">0%</span>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; font-size: 0.8rem;">
+                        <strong>Português</strong> <span id="port-perc">0%</span>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 </div>
 
-<div id="activity-modal" class="modal">
+<div id="q-modal" class="modal">
     <div class="modal-content">
-        <h2>Registrar Atividade</h2>
-        <input type="number" id="num-activities" placeholder="Quantas atividades fez?">
-        <input type="number" id="num-correct" placeholder="Quantas acertou?">
-        <button id="save-activity">Confirmar</button>
+        <h2>Registrar Meta</h2>
+        <p id="modal-task-name" style="font-weight: bold; color: var(--gold);"></p>
+        <input type="number" id="in-total" placeholder="Total de questões">
+        <input type="number" id="in-right" placeholder="Total de acertos">
+        <button onclick="confirmTask()">SALVAR RESULTADO</button>
     </div>
 </div>
-
-<footer>ESTUDE COM HONRA | PMMG 2024</footer>
 
 <script>
-    // Configuração do Cronograma (Exemplo para Segunda-feira)
-    const cronogramaTeoria = [
-        { d: "Segunda-feira", tarefas: [
-            { h: "13:30", t: "Revisão Processo Penal (Revisão 24h)" },
-            { h: "13:45", t: "Língua Portuguesa (Teoria)" }
-        ]}
+    const theory = [
+        { h: "13:30", t: "Revisão Processo Penal (Revisão 24h)" },
+        { h: "13:45", t: "Português (Teoria)" }
     ];
 
-    const cronogramaAtividade = [
-        { d: "Segunda-feira", tarefas: [
-            { h: "14:45", t: "Direito Constitucional (10 questões)" },
-            { h: "15:45", t: "Pausa (15 min)" }
-        ]}
+    const activities = [
+        { h: "14:45", t: "Direito Constitucional (10 questões)", cat: "const" },
+        { h: "15:45", t: "Pausa (15 min)", cat: "none" }
     ];
 
-    let currentDayIndex = 0; // Exemplo fixo para segunda-feira
+    let currentTask = null;
 
-    function renderizar() {
-        // Teoria
-        const theoryContainer = document.getElementById('theory-content');
-        theoryContainer.innerHTML = cronogramaTeoria[currentDayIndex].tarefas.map(tarefa => {
-            const taskId = `theory-${currentDayIndex}-${tarefa.h}`;
-            const isChecked = localStorage.getItem(taskId) === 'true' ? 'checked' : '';
-            return `
-                <label class="task-item">
-                    <input type="checkbox" onchange="localStorage.setItem('${taskId}', this.checked)" ${isChecked}>
-                    <span class="time-tag">${tarefa.h}</span>
-                    <span class="task-label">${tarefa.t}</span>
-                </label>
-            `;
+    function render() {
+        // Render Teoria
+        document.getElementById('theory-list').innerHTML = theory.map((x, i) => {
+            const id = `t-${i}`;
+            const chk = localStorage.getItem(id) === 'true' ? 'checked' : '';
+            return `<label class="task-item">
+                <input type="checkbox" onchange="localStorage.setItem('${id}', this.checked)" ${chk}>
+                <span class="time">${x.h}</span><span class="task-label">${x.t}</span>
+            </label>`;
         }).join('');
 
-        // Atividade
-        const activityContainer = document.getElementById('activity-content');
-        activityContainer.innerHTML = cronogramaAtividade[currentDayIndex].tarefas.map(tarefa => {
-            const taskId = `activity-${currentDayIndex}-${tarefa.h}`;
-            const isChecked = localStorage.getItem(taskId) === 'true' ? 'checked' : '';
-            return `
-                <label class="task-item">
-                    <input type="checkbox" class="activity-checkbox" data-task-id="${taskId}" ${isChecked}>
-                    <span class="time-tag">${tarefa.h}</span>
-                    <span class="task-label">${tarefa.t}</span>
-                </label>
-            `;
+        // Render Atividade
+        document.getElementById('activity-list').innerHTML = activities.map((x, i) => {
+            const id = `a-${i}`;
+            const chk = localStorage.getItem(id) === 'true' ? 'checked' : '';
+            return `<label class="task-item">
+                <input type="checkbox" onchange="openModal('${id}', '${x.t}', '${x.cat}')" ${chk} id="chk-${id}">
+                <span class="time">${x.h}</span><span class="task-label">${x.t}</span>
+            </label>`;
         }).join('');
-
-        configurarCheckboxesAtividade();
+        updateStats();
     }
 
-    // Modal de Atividades
-    const modal = document.getElementById("activity-modal");
-    let activeActivityId = null;
-
-    function configurarCheckboxesAtividade() {
-        document.querySelectorAll('.activity-checkbox').forEach(checkbox => {
-            checkbox.addEventListener('change', function() {
-                if (this.checked) {
-                    activeActivityId = this.dataset.taskId;
-                    modal.style.display = "block";
-                }
-            });
-        });
-    }
-
-    document.getElementById("save-activity").onclick = function() {
-        const totalNum = document.getElementById("num-activities").value;
-        const correctNum = document.getElementById("num-correct").value;
-
-        if (totalNum && correctNum && activeActivityId) {
-            localStorage.setItem(`${activeActivityId}-total`, totalNum);
-            localStorage.setItem(`${activeActivityId}-correct`, correctNum);
-            localStorage.setItem(activeActivityId, 'true'); // Salva o check
-            modal.style.display = "none";
-            atualizarEstatisticas();
+    function openModal(id, name, cat) {
+        if (cat === 'none') { localStorage.setItem(id, 'true'); return; }
+        if (document.getElementById('chk-'+id).checked) {
+            currentTask = { id, cat };
+            document.getElementById('modal-task-name').innerText = name;
+            document.getElementById('q-modal').style.display = 'block';
+        } else {
+            localStorage.setItem(id, 'false');
+            localStorage.removeItem(id + '-tot');
+            localStorage.removeItem(id + '-rig');
+            updateStats();
         }
-    };
+    }
 
-    // Estatísticas
-    function atualizarEstatisticas() {
-        let totalQuestions = 0;
-        let totalCorrect = 0;
+    function confirmTask() {
+        const tot = parseInt(document.getElementById('in-total').value) || 0;
+        const rig = parseInt(document.getElementById('in-right').value) || 0;
+        localStorage.setItem(currentTask.id, 'true');
+        localStorage.setItem(currentTask.id + '-tot', tot);
+        localStorage.setItem(currentTask.id + '-rig', rig);
+        localStorage.setItem(currentTask.id + '-cat', currentTask.cat);
+        document.getElementById('q-modal').style.display = 'none';
+        updateStats();
+    }
 
-        cronogramaAtividade.forEach((dia, dayIdx) => {
-            dia.tarefas.forEach(tarefa => {
-                const taskId = `activity-${dayIdx}-${tarefa.h}`;
-                const totalStored = parseInt(localStorage.getItem(`${taskId}-total`)) || 0;
-                const correctStored = parseInt(localStorage.getItem(`${taskId}-correct`)) || 0;
-                totalQuestions += totalStored;
-                totalCorrect += correctStored;
-            });
+    function updateStats() {
+        let totalQ = 0, totalR = 0;
+        activities.forEach((_, i) => {
+            totalQ += parseInt(localStorage.getItem(`a-${i}-tot`)) || 0;
+            totalR += parseInt(localStorage.getItem(`a-${i}-rig`)) || 0;
         });
-
-        const overallPercentage = totalQuestions > 0 ? Math.round((totalCorrect / totalQuestions) * 100) : 0;
-
-        document.getElementById('total-questions').innerText = totalQuestions;
-        document.getElementById('overall-percentage').innerText = `${overallPercentage}%`;
+        document.getElementById('total-q').innerText = totalQ;
+        document.getElementById('perc-q').innerText = totalQ > 0 ? Math.round((totalR/totalQ)*100)+'%' : '0%';
+        // Simulação de categorias para o exemplo
+        document.getElementById('const-perc').innerText = document.getElementById('perc-q').innerText;
     }
 
-    function updateLogic() {
+    function clock() {
         const now = new Date();
-        document.getElementById('live-clock').innerText = now.toLocaleTimeString('pt-BR');
-        
-        const options = { weekday: 'long', day: 'numeric', month: 'long' };
-        document.getElementById('date-display').innerText = now.toLocaleDateString('pt-BR', options);
+        document.getElementById('clock').innerText = now.toLocaleTimeString('pt-BR');
+        document.getElementById('date').innerText = now.toLocaleDateString('pt-BR', {weekday:'long', day:'numeric', month:'long'});
     }
 
-    // Iniciar sistema
-    renderizar();
-    atualizarEstatisticas();
-    setInterval(updateLogic, 1000);
-    updateLogic();
+    render();
+    setInterval(clock, 1000);
+    clock();
 </script>
 </body>
 </html>
