@@ -6,48 +6,153 @@
     <title>QAP | Cronograma PMMG</title>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&display=swap" rel="stylesheet">
     <style>
-        :root { --navy: #003366; --gold: #C5A059; --danger: #e74c3c; }
-        body { font-family: 'Montserrat', sans-serif; background-color: #dee2e6; margin: 0; padding: 0; }
-        header { background: var(--navy); color: white; padding: 40px 20px 80px; text-align: center; border-bottom: 4px solid var(--gold); }
-        header h1 { margin: 0; font-size: 2rem; font-weight: 900; }
-        header p { margin: 5px 0 0; color: var(--gold); font-weight: bold; letter-spacing: 2px; }
+        :root { 
+            --navy: #003366; 
+            --gold: #C5A059; 
+            --danger: #e74c3c; 
+            --bg: #e9ecef;
+        }
+        
+        body { font-family: 'Montserrat', sans-serif; background-color: var(--bg); margin: 0; padding: 0; }
+        
+        header { 
+            background: var(--navy); 
+            color: white; 
+            padding: 40px 20px 80px; 
+            text-align: center; 
+            border-bottom: 5px solid var(--gold); 
+        }
+
+        .brasao {
+            width: 90px;
+            height: auto;
+            margin-bottom: 15px;
+            filter: drop-shadow(0px 4px 4px rgba(0,0,0,0.3));
+        }
+
+        header h1 { margin: 0; font-size: 1.8rem; font-weight: 900; letter-spacing: 1px; }
+        header p { margin: 5px 0 0; color: var(--gold); font-weight: 800; letter-spacing: 2px; }
+
         .container { max-width: 600px; margin: -60px auto 50px; padding: 0 15px; }
-        .card { background: white; padding: 20px; border-radius: 12px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); margin-bottom: 25px; text-align: center; border-top: 5px solid var(--gold); }
-        #clock { font-size: 2.2rem; font-weight: 900; color: var(--navy); margin: 0; }
-        .day-block { background: white; border-radius: 8px; margin-bottom: 15px; overflow: hidden; box-shadow: 0 4px 6px rgba(0,0,0,0.05); }
-        .day-header { background: #e9ecef; padding: 12px 20px; font-weight: 800; color: var(--navy); border-bottom: 2px solid var(--gold); text-transform: uppercase; }
-        .task { display: flex; align-items: center; padding: 12px 20px; border-bottom: 1px solid #eee; cursor: pointer; }
+        
+        .card { 
+            background: white; 
+            padding: 20px; 
+            border-radius: 12px; 
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15); 
+            margin-bottom: 25px; 
+            text-align: center; 
+            border-top: 5px solid var(--gold); 
+        }
+
+        #clock { font-size: 2.5rem; font-weight: 900; color: var(--navy); margin: 0; }
+        #date { font-weight: bold; color: #666; text-transform: capitalize; }
+
+        .day-block { background: white; border-radius: 10px; margin-bottom: 20px; overflow: hidden; box-shadow: 0 4px 10px rgba(0,0,0,0.08); }
+        
+        .day-header { 
+            background: #f1f3f5; 
+            padding: 15px 20px; 
+            font-weight: 900; 
+            color: var(--navy); 
+            border-bottom: 3px solid var(--gold); 
+            text-transform: uppercase;
+            font-size: 0.9rem;
+        }
+
+        .task { 
+            display: flex; 
+            align-items: center; 
+            padding: 15px 20px; 
+            border-bottom: 1px solid #eee; 
+            cursor: pointer; 
+            transition: 0.2s;
+        }
+        
+        .task:hover { background: #fdfdfd; }
         .task:last-child { border-bottom: none; }
-        .task.break { background: #fff5f5; }
-        .task.exercise { background: #f0fff4; }
-        input[type="checkbox"] { width: 20px; height: 20px; margin-right: 15px; accent-color: var(--navy); }
-        .time { font-size: 0.8rem; font-weight: 800; background: var(--navy); color: white; padding: 3px 6px; border-radius: 4px; margin-right: 10px; }
+        
+        /* Cores especiais para Pausa e Exercício */
+        .task.break { background: #fff5f5; color: #c53030; }
+        .task.exercise { background: #f0fff4; color: #276749; }
+
+        input[type="checkbox"] { width: 22px; height: 22px; margin-right: 15px; accent-color: var(--navy); cursor: pointer; }
+        
+        .time { 
+            font-size: 0.8rem; 
+            font-weight: 900; 
+            background: var(--navy); 
+            color: white; 
+            padding: 4px 8px; 
+            border-radius: 5px; 
+            margin-right: 12px; 
+            min-width: 50px; 
+            text-align: center;
+        }
+
         .info { flex-grow: 1; }
-        .label { font-weight: 700; display: block; font-size: 0.9rem; }
-        .obs { font-size: 0.7rem; color: #666; }
-        .badge { background: var(--danger); color: white; font-size: 0.6rem; padding: 2px 5px; border-radius: 3px; display: none; margin-left: 5px; }
-        input:checked ~ .info .label { text-decoration: line-through; color: #ccc; }
-        .summary { background: var(--navy); color: white; padding: 20px; border-radius: 12px; font-size: 0.8rem; }
-        .summary h3 { color: var(--gold); margin: 0 0 10px; }
+        .label { font-weight: 800; display: block; font-size: 0.95rem; color: #333; }
+        .obs { font-size: 0.75rem; color: #777; font-weight: 600; }
+
+        .badge { 
+            background: var(--danger); 
+            color: white; 
+            font-size: 0.65rem; 
+            padding: 3px 7px; 
+            border-radius: 4px; 
+            font-weight: 900; 
+            display: none; 
+            margin-left: 10px;
+            animation: pulse 1.5s infinite;
+        }
+
+        @keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.5; } 100% { opacity: 1; } }
+
+        input:checked ~ .info .label { text-decoration: line-through; color: #bbb; }
+        input:checked ~ .info .obs { color: #ddd; }
+
+        .summary { 
+            background: var(--navy); 
+            color: white; 
+            padding: 25px; 
+            border-radius: 12px; 
+            font-size: 0.85rem; 
+            border-left: 8px solid var(--gold);
+        }
+        .summary h3 { color: var(--gold); margin: 0 0 10px; font-weight: 900; text-transform: uppercase; }
+        
+        footer { text-align: center; padding: 40px; color: #888; font-size: 0.75rem; font-weight: bold; }
     </style>
 </head>
 <body>
+
     <header>
+        <img src="https://upload.wikimedia.org/wikipedia/commons/b/b1/Bras%C3%A3o_da_Pol%C3%ADcia_Militar_de_Minas_Gerais.png" 
+             alt="PMMG" 
+             class="brasao" 
+             onerror="this.style.display='none'">
         <h1>CRONOGRAMA CFO</h1>
         <p>RUMO À GLORIOSA</p>
     </header>
+
     <div class="container">
         <div class="card">
             <p id="clock">00:00:00</p>
-            <div id="date" style="font-weight: bold; color: #666;">Carregando...</div>
+            <div id="date">Carregando dados...</div>
         </div>
+
         <div id="content"></div>
+
         <div class="summary">
-            <h3>📊 Resumo de Metas</h3>
-            Português e Constitucional: 5x/semana<br>
-            Meta: 30-40 questões diárias
+            <h3>📊 RESULTADO SEMANAL</h3>
+            Português: 5x | Constitucional: 5x | Penal: 2x<br>
+            Processo Penal: 2x | Administrativo: 2x | Civil: 2x<br><br>
+            <strong>META DIÁRIA:</strong> 30 a 40 questões
         </div>
     </div>
+
+    <footer>FORÇA E HONRA &bull; PMMG</footer>
+
     <script>
         const dados = [
             { d: "Segunda-feira", id: 1, t: [
@@ -99,17 +204,21 @@
         ];
 
         function montar() {
-            document.getElementById('content').innerHTML = dados.map(dia => `
+            const container = document.getElementById('content');
+            container.innerHTML = dados.map(dia => `
                 <div class="day-block">
                     <div class="day-header">${dia.d}</div>
                     <div class="list" data-w="${dia.id}">
                         ${dia.t.map(x => {
-                            const id = `cfo-${dia.id}-${x.h}`;
+                            const id = `pmmg-cfo-${dia.id}-${x.h}`;
                             const chk = localStorage.getItem(id) === 'true' ? 'checked' : '';
                             return `<label class="task ${x.type || ''}">
                                 <input type="checkbox" onchange="localStorage.setItem('${id}', this.checked); up();" ${chk}>
                                 <span class="time">${x.h}</span>
-                                <div class="info"><span class="label">${x.m}</span><span class="obs">${x.o}</span></div>
+                                <div class="info">
+                                    <span class="label">${x.m}</span>
+                                    <span class="obs">${x.o}</span>
+                                </div>
                                 <span class="badge">ATRASADO</span>
                             </label>`;
                         }).join('')}
@@ -122,15 +231,26 @@
             const n = new Date();
             document.getElementById('clock').innerText = n.toLocaleTimeString('pt-BR');
             document.getElementById('date').innerText = n.toLocaleDateString('pt-BR', {weekday:'long', day:'numeric', month:'long'});
+            
             const d = n.getDay(), h = n.getHours(), m = n.getMinutes();
+            
             document.querySelectorAll('.task').forEach(el => {
                 const dw = parseInt(el.closest('.list').dataset.w);
                 const [th, tm] = el.querySelector('.time').innerText.split(':').map(Number);
                 const b = el.querySelector('.badge'), c = el.querySelector('input').checked;
-                b.style.display = (d===dw && !c && (h>th || (h===th && m>=tm))) ? 'inline' : 'none';
+                
+                // Lógica de atraso: somente se for o dia correto e a hora já passou
+                if (d === dw && !c && (h > th || (h === th && m >= tm))) {
+                    b.style.display = 'inline';
+                } else {
+                    b.style.display = 'none';
+                }
             });
         }
-        montar(); setInterval(up, 1000); up();
+
+        montar();
+        setInterval(up, 1000);
+        up();
     </script>
 </body>
 </html>
