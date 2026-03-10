@@ -1,3 +1,15 @@
+const senhaCorreta = "CFO2026"; // Escolha sua senha aqui
+let acesso = localStorage.getItem('acesso-autorizado');
+
+if (acesso !== 'true') {
+    let tentativa = prompt("IDENTIFIQUE-SE - ACESSO RESTRITO:");
+    if (tentativa === senhaCorreta) {
+        localStorage.setItem('acesso-autorizado', 'true');
+    } else {
+        alert("ACESSO NEGADO.");
+        document.body.innerHTML = "<h1 style='text-align:center; margin-top:100px;'>ACESSO RESTRITO - PMMG</h1>";
+    }
+}
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
