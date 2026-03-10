@@ -1,15 +1,3 @@
-const senhaCorreta = "CFO2026"; // Escolha sua senha aqui
-let acesso = localStorage.getItem('acesso-autorizado');
-
-if (acesso !== 'true') {
-    let tentativa = prompt("IDENTIFIQUE-SE - ACESSO RESTRITO:");
-    if (tentativa === senhaCorreta) {
-        localStorage.setItem('acesso-autorizado', 'true');
-    } else {
-        alert("ACESSO NEGADO.");
-        document.body.innerHTML = "<h1 style='text-align:center; margin-top:100px;'>ACESSO RESTRITO - PMMG</h1>";
-    }
-}
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -27,64 +15,38 @@ if (acesso !== 'true') {
             --white: #ffffff;
             --danger: #ff4d4d;
             --success: #00b894;
-            --glass: rgba(255, 255, 255, 0.9);
         }
 
         body {
             font-family: 'Montserrat', sans-serif;
             background-color: var(--bg);
-            /* Fundo com padrão geométrico sutil */
             background-image: radial-gradient(#d1d5db 0.5px, transparent 0.5px);
             background-size: 20px 20px;
             margin: 0; padding: 0;
             color: #2d3436;
+            display: none; /* Esconde o site até a senha ser validada */
         }
 
         header {
             background: linear-gradient(135deg, var(--gold) 0%, var(--gold-dark) 100%);
-            color: #000; /* Texto preto para contraste no dourado */
+            color: #000;
             padding: 45px 20px 85px;
             text-align: center;
             border-bottom: 6px solid var(--navy);
             clip-path: ellipse(150% 100% at 50% 0%);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
         }
 
-        .pmmg-brand { 
-            font-size: 3.5rem; 
-            font-weight: 900; 
-            letter-spacing: 12px; 
-            margin: 0; 
-            color: black; 
-            text-shadow: 1px 1px 2px rgba(255,255,255,0.3);
-        }
+        .pmmg-brand { font-size: 3.5rem; font-weight: 900; letter-spacing: 12px; margin: 0; color: black; }
         
-        header h1 { font-size: 1.1rem; margin: 10px 0; font-weight: 800; text-transform: uppercase; color: rgba(0,0,0,0.7); }
-
         nav {
-            display: flex;
-            justify-content: center;
-            gap: 12px;
-            margin-top: -35px;
-            padding: 0 10px;
-            position: sticky;
-            top: 20px;
-            z-index: 100;
+            display: flex; justify-content: center; gap: 12px;
+            margin-top: -35px; padding: 0 10px; position: sticky; top: 20px; z-index: 100;
         }
 
         nav a {
-            background: var(--navy);
-            color: white;
-            padding: 14px 22px;
-            border-radius: 50px;
-            text-decoration: none;
-            font-weight: 800;
-            font-size: 0.65rem;
-            text-transform: uppercase;
-            box-shadow: 0 8px 20px rgba(0,0,0,0.2);
-            transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            cursor: pointer;
-            border: 2px solid var(--gold);
+            background: var(--navy); color: white; padding: 14px 22px;
+            border-radius: 50px; text-decoration: none; font-weight: 800; font-size: 0.65rem;
+            text-transform: uppercase; box-shadow: 0 8px 20px rgba(0,0,0,0.2); cursor: pointer; border: 2px solid var(--gold);
         }
 
         nav a.active { background: var(--white); color: var(--navy); transform: translateY(-5px); border-color: var(--navy); }
@@ -92,94 +54,50 @@ if (acesso !== 'true') {
         .container { max-width: 600px; margin: 40px auto 120px; padding: 0 20px; }
 
         .status-card {
-            background: var(--glass);
-            backdrop-filter: blur(10px);
-            padding: 25px;
-            border-radius: 25px;
-            text-align: center;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.06);
-            margin-bottom: 35px;
-            border: 1px solid rgba(255,255,255,0.5);
+            background: rgba(255, 255, 255, 0.9); backdrop-filter: blur(10px);
+            padding: 25px; border-radius: 25px; text-align: center; box-shadow: 0 15px 35px rgba(0,0,0,0.06); margin-bottom: 35px;
         }
 
         #clock { font-size: 2.8rem; font-weight: 900; color: var(--navy); display: block; }
-        #current-day-display { font-weight: 900; color: var(--gold-dark); text-transform: uppercase; letter-spacing: 3px; font-size: 1.1rem; }
+        #current-day-display { font-weight: 900; color: var(--gold-dark); text-transform: uppercase; letter-spacing: 3px; }
 
-        /* CARDS DE MATÉRIA */
-        .task-card {
-            background: var(--white);
-            border-radius: 20px;
-            margin-bottom: 18px;
-            padding: 20px;
-            display: flex;
-            align-items: center;
-            gap: 18px;
-            border: 2px solid transparent;
-            transition: 0.3s ease;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.03);
-        }
-
-        .task-card.completed { border-color: var(--success); opacity: 0.55; background: #fdfdfd; transform: scale(0.98); }
+        .task-card { background: var(--white); border-radius: 20px; margin-bottom: 18px; padding: 20px; display: flex; align-items: center; gap: 18px; border: 2px solid transparent; transition: 0.3s; }
+        .task-card.completed { border-color: var(--success); opacity: 0.55; }
         .task-card.overdue { border-color: var(--danger); background: #fffafa; animation: pulse-danger 2s infinite; }
 
-        @keyframes pulse-danger {
-            0% { box-shadow: 0 0 0 0 rgba(231, 76, 60, 0.4); }
-            70% { box-shadow: 0 0 0 12px rgba(231, 76, 60, 0); }
-            100% { box-shadow: 0 0 0 0 rgba(231, 76, 60, 0); }
-        }
+        @keyframes pulse-danger { 0% { box-shadow: 0 0 0 0 rgba(231, 76, 60, 0.4); } 70% { box-shadow: 0 0 0 12px rgba(231, 76, 60, 0); } 100% { box-shadow: 0 0 0 0 rgba(231, 76, 60, 0); } }
 
         .icon-box { width: 48px; height: 48px; background: #f1f3f5; border-radius: 14px; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; color: var(--navy); flex-shrink: 0; }
         .task-content { flex-grow: 1; }
         .task-name { font-weight: 800; font-size: 1rem; color: var(--navy); display: block; }
         .task-obs { font-size: 0.75rem; color: #7f8c8d; font-weight: 600; display: block; }
-        .task-time { font-size: 0.65rem; font-weight: 900; color: var(--gold-dark); text-transform: uppercase; }
 
         .check-btn { width: 32px; height: 32px; border-radius: 50%; border: 3px solid #e9ecef; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: 0.3s; }
         input[type="checkbox"] { display: none; }
         input[type="checkbox"]:checked + .check-btn { background: var(--success); border-color: var(--success); color: white; }
 
-        /* ABA EVOLUÇÃO */
-        .progresso-container { text-align: center; border-bottom: 4px solid var(--gold); }
         .circle-progress {
-            width: 160px; height: 160px;
-            border-radius: 50%;
-            background: conic-gradient(var(--navy) 0%, #eee 0%);
-            margin: 25px auto;
-            display: flex;
-            align-items: center; justify-content: center;
-            position: relative;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            width: 160px; height: 160px; border-radius: 50%; background: conic-gradient(var(--navy) 0%, #eee 0%);
+            margin: 25px auto; display: flex; align-items: center; justify-content: center; position: relative;
         }
         .circle-progress::after {
-            content: attr(data-value);
-            position: absolute;
-            width: 130px; height: 130px;
-            background: white;
-            border-radius: 50%;
-            display: flex;
-            align-items: center; justify-content: center;
-            font-size: 2.2rem; font-weight: 900; color: var(--navy);
+            content: attr(data-value); position: absolute; width: 130px; height: 130px; background: white;
+            border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 2.2rem; font-weight: 900; color: var(--navy);
         }
 
-        .materia-prog-card {
-            background: white; padding: 18px 25px; border-radius: 20px; margin-bottom: 12px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.04);
-            display: flex; justify-content: space-between; align-items: center;
-            border-left: 6px solid var(--gold);
-        }
+        .materia-prog-card { background: white; padding: 18px 25px; border-radius: 20px; margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center; border-left: 6px solid var(--gold); }
 
         .page { display: none; }
         .page.active { display: block; animation: fadeInUp 0.5s ease; }
         @keyframes fadeInUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
 
-        .btn-next { background: var(--navy); color: white; border: 2px solid var(--gold); padding: 18px 35px; border-radius: 50px; font-weight: 900; font-size: 0.9rem; cursor: pointer; transition: 0.3s; width: 100%; box-shadow: 0 10px 25px rgba(0,51,102,0.3); }
-        .btn-next:disabled { background: #bdc3c7; border-color: #bdc3c7; cursor: not-allowed; box-shadow: none; }
+        .btn-next { background: var(--navy); color: white; border: 2px solid var(--gold); padding: 18px 35px; border-radius: 50px; font-weight: 900; cursor: pointer; width: 100%; }
+        .btn-next:disabled { background: #bdc3c7; border-color: #bdc3c7; cursor: not-allowed; }
 
-        /* Modal */
         .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 1000; backdrop-filter: blur(8px); }
-        .modal-content { background: white; width: 85%; max-width: 320px; margin: 20vh auto; padding: 35px; border-radius: 30px; text-align: center; border-top: 10px solid var(--gold); }
-        .modal input { width: 100%; padding: 15px; margin: 12px 0; border: 2px solid #f1f3f5; border-radius: 15px; box-sizing: border-box; font-size: 1.1rem; text-align: center; font-weight: 800; }
-        .modal button { background: var(--navy); color: white; border: none; padding: 18px; border-radius: 15px; width: 100%; font-weight: 900; cursor: pointer; margin-top: 15px; text-transform: uppercase; }
+        .modal-content { background: white; width: 85%; max-width: 320px; margin: 20vh auto; padding: 35px; border-radius: 30px; text-align: center; }
+        .modal input { width: 100%; padding: 15px; margin: 12px 0; border: 2px solid #f1f3f5; border-radius: 15px; box-sizing: border-box; font-size: 1.1rem; text-align: center; }
+        .modal button { background: var(--navy); color: white; border: none; padding: 18px; border-radius: 15px; width: 100%; font-weight: 900; cursor: pointer; }
     </style>
 </head>
 <body>
@@ -196,31 +114,23 @@ if (acesso !== 'true') {
 </nav>
 
 <div class="container">
-    
     <div id="page-missao" class="page active">
         <div class="status-card">
             <span id="current-day-display">Segunda-Feira</span>
             <span id="clock">00:00:00</span>
             <small id="date-text" style="color:var(--gold-dark); font-weight:800; text-transform: uppercase; font-size: 0.7rem;"></small>
         </div>
-
         <div id="tasks-container"></div>
-
         <div class="next-day-area" style="margin-top: 40px;">
-            <button class="btn-next" id="btn-proximo" onclick="avancarDia()" disabled>
-                CUMPRIR MISSÃO DO DIA <i class="fas fa-arrow-right"></i>
-            </button>
-            <p id="lock-msg" style="font-size: 0.75rem; color: #95a5a6; margin-top: 12px; font-weight: bold; text-align: center;">
-                <i class="fas fa-lock"></i> Bloqueado: Complete as tarefas do dia
-            </p>
+            <button class="btn-next" id="btn-proximo" onclick="avancarDia()" disabled>CUMPRIR MISSÃO DO DIA <i class="fas fa-arrow-right"></i></button>
+            <p id="lock-msg" style="font-size: 0.75rem; color: #95a5a6; margin-top: 12px; font-weight: bold; text-align: center;">Bloqueado: Complete as tarefas do dia</p>
         </div>
     </div>
 
     <div id="page-evolucao" class="page">
-        <div class="status-card progresso-container">
+        <div class="status-card">
             <h2 style="margin:0; color:var(--navy); font-size: 1.3rem;">Progresso do Edital</h2>
             <div class="circle-progress" id="global-circle" data-value="0%"></div>
-            <p style="font-size: 0.7rem; font-weight: 800; color: #7f8c8d; text-transform: uppercase; letter-spacing: 1px;">Rumo à Prova de Dezembro</p>
         </div>
         <div id="materias-evolucao-list"></div>
     </div>
@@ -229,67 +139,50 @@ if (acesso !== 'true') {
         <div class="status-card">
             <h2 style="margin:0; color:var(--navy); font-size: 1.3rem;">Ranking de Performance</h2>
             <div style="display: flex; justify-content: space-around; margin-top: 30px;">
-                <div style="text-align: center;">
-                    <span id="total-q" style="font-size: 2.5rem; font-weight: 900; color: var(--navy);">0</span>
-                    <br><small style="font-weight: 800; color: #bdc3c7;">QUESTÕES</small>
-                </div>
-                <div style="text-align: center;">
-                    <span id="perc-q" style="font-size: 2.5rem; font-weight: 900; color: var(--success);">0%</span>
-                    <br><small style="font-weight: 800; color: #bdc3c7;">ACERTO</small>
-                </div>
+                <div style="text-align: center;"><span id="total-q" style="font-size: 2.5rem; font-weight: 900; color: var(--navy);">0</span><br><small>QUESTÕES</small></div>
+                <div style="text-align: center;"><span id="perc-q" style="font-size: 2.5rem; font-weight: 900; color: var(--success);">0%</span><br><small>ACERTO</small></div>
             </div>
         </div>
-        <button onclick="if(confirm('Isso apagará todo seu progresso. Confirmar?')) { localStorage.clear(); location.reload(); }" style="width: 100%; border: none; background: none; color: #bdc3c7; font-weight: bold; font-size: 0.7rem; cursor: pointer; padding: 20px;">RESETAR SISTEMA</button>
+        <button onclick="if(confirm('Resetar sistema?')) { localStorage.clear(); location.reload(); }" style="width: 100%; border: none; background: none; color: #bdc3c7; font-weight: bold; font-size: 0.7rem; cursor: pointer; padding: 20px;">RESETAR SISTEMA</button>
     </div>
 </div>
 
 <div id="modal-q" class="modal">
     <div class="modal-content">
-        <i class="fas fa-check-double" style="font-size: 2.5rem; color: var(--gold); margin-bottom: 15px;"></i>
-        <h3 style="margin: 0; color: var(--navy); text-transform: uppercase; font-weight: 900;">Relatório de Combate</h3>
-        <input type="number" id="in-tot" placeholder="Total de questões">
+        <h3>Resultado</h3>
+        <input type="number" id="in-tot" placeholder="Total">
         <input type="number" id="in-hit" placeholder="Acertos">
-        <button onclick="salvarQuestao()">GRAVAR NO BANCO</button>
+        <button onclick="salvarQuestao()">GRAVAR</button>
     </div>
 </div>
 
 <script>
+    // --- SISTEMA DE SENHA (Ajuste a senha aqui) ---
+    const MINHA_SENHA = "CFO2026"; 
+
+    function verificarAcesso() {
+        if (localStorage.getItem('acesso_pmmg') === 'true') {
+            document.body.style.display = 'block';
+            renderMissao();
+        } else {
+            let p = prompt("IDENTIFIQUE-SE - ACESSO RESTRITO PMMG:");
+            if (p === MINHA_SENHA) {
+                localStorage.setItem('acesso_pmmg', 'true');
+                document.body.style.display = 'block';
+                renderMissao();
+            } else {
+                alert("ACESSO NEGADO.");
+                window.location.reload();
+            }
+        }
+    }
+
     const cronograma = {
-        1: { d: "Segunda-feira", tarefas: [
-            { h: "13:30", m: "Revisão Processo Penal", o: "Revisão 24h", i: "fa-history" },
-            { h: "13:45", m: "Português", o: "Morfologia (Pág 1-15) + 10Q", i: "fa-language", q: true },
-            { h: "14:45", m: "Dir. Constitucional", o: "Princípios (Pág 1-12) + 10Q", i: "fa-balance-scale", q: true },
-            { h: "16:00", m: "Direito Penal", o: "Lei Penal no Tempo + 5Q", i: "fa-gavel", q: true },
-            { h: "17:00", m: "Processo Penal", o: "Inquérito Policial + 15Q", i: "fa-handcuffs", q: true }
-        ]},
-        2: { d: "Terça-feira", tarefas: [
-            { h: "13:30", m: "Revisão Penal", o: "Revisão 24h", i: "fa-history" },
-            { h: "13:45", m: "Português", o: "Morfologia (Pág 16-30) + 10Q", i: "fa-language", q: true },
-            { h: "14:45", m: "Dir. Constitucional", o: "Direitos Individuais + 10Q", i: "fa-balance-scale", q: true },
-            { h: "16:00", m: "Dir. Administrativo", o: "Regime Jurídico + 5Q", i: "fa-university", q: true },
-            { h: "17:00", m: "Processo Civil", o: "Normas Processuais + 15Q", i: "fa-file-signature", q: true }
-        ]},
-        3: { d: "Quarta-feira", tarefas: [
-            { h: "13:30", m: "Revisão Administrativo", o: "Revisão 24h", i: "fa-history" },
-            { h: "13:45", m: "Português", o: "Semântica + 10Q", i: "fa-language", q: true },
-            { h: "14:45", m: "Dir. Constitucional", o: "Controle de Const. + 10Q", i: "fa-balance-scale", q: true },
-            { h: "16:00", m: "Direito Penal", o: "Teoria do Crime + 5Q", i: "fa-gavel", q: true },
-            { h: "17:00", m: "Legislação Extravagante", o: "Leis Especiais + 15Q", i: "fa-id-badge", q: true }
-        ]},
-        4: { d: "Quinta-feira", tarefas: [
-            { h: "13:30", m: "Revisão Civil", o: "Revisão 24h", i: "fa-history" },
-            { h: "13:45", m: "Português", o: "Sintaxe + 10Q", i: "fa-language", q: true },
-            { h: "14:45", m: "Dir. Constitucional", o: "Poder Judiciário + 10Q", i: "fa-balance-scale", q: true },
-            { h: "16:00", m: "Processo Penal", o: "Ação Penal + 5Q", i: "fa-handcuffs", q: true },
-            { h: "17:00", m: "Dir. Administrativo", o: "Atos Admin + 15Q", i: "fa-university", q: true }
-        ]},
-        5: { d: "Sexta-feira", tarefas: [
-            { h: "13:30", m: "Revisão Constitucional", o: "Revisão 24h", i: "fa-history" },
-            { h: "13:45", m: "Português", o: "Redação + 20Q", i: "fa-pen-fancy", q: true },
-            { h: "14:45", m: "Dir. Constitucional", o: "Org. do Estado + 20Q", i: "fa-balance-scale", q: true },
-            { h: "16:00", m: "Direito Civil", o: "Sujeitos do Processo + 5Q", i: "fa-file-signature", q: true },
-            { h: "17:40", m: "Revisão Semanal", o: "Check de Erros", i: "fa-chart-pie" }
-        ]}
+        1: { d: "Segunda-feira", tarefas: [{h:"13:30", m:"Revisão Processo Penal", o:"24h", i:"fa-history"}, {h:"13:45", m:"Português", o:"Morfologia + 10Q", i:"fa-language", q:true}, {h:"14:45", m:"Dir. Constitucional", o:"Princípios + 10Q", i:"fa-balance-scale", q:true}, {h:"16:00", m:"Direito Penal", o:"Teoria + 5Q", i:"fa-gavel", q:true}, {h:"17:00", m:"Processo Penal", o:"Inquérito + 15Q", i:"fa-handcuffs", q:true}]},
+        2: { d: "Terça-feira", tarefas: [{h:"13:30", m:"Revisão Penal", o:"24h", i:"fa-history"}, {h:"13:45", m:"Português", o:"Morfologia + 10Q", i:"fa-language", q:true}, {h:"14:45", m:"Dir. Constitucional", o:"Direitos + 10Q", i:"fa-balance-scale", q:true}, {h:"16:00", m:"Dir. Administrativo", o:"Regime + 5Q", i:"fa-university", q:true}, {h:"17:00", m:"Processo Civil", o:"Normas + 15Q", i:"fa-file-signature", q:true}]},
+        3: { d: "Quarta-feira", tarefas: [{h:"13:30", m:"Revisão Adm", o:"24h", i:"fa-history"}, {h:"13:45", m:"Português", o:"Semântica + 10Q", i:"fa-language", q:true}, {h:"14:45", m:"Dir. Constitucional", o:"Controle + 10Q", i:"fa-balance-scale", q:true}, {h:"16:00", m:"Direito Penal", o:"Teoria do Crime + 5Q", i:"fa-gavel", q:true}, {h:"17:00", m:"Leg. Extravagante", o:"Leis + 15Q", i:"fa-id-badge", q:true}]},
+        4: { d: "Quinta-feira", tarefas: [{h:"13:30", m:"Revisão Civil", o:"24h", i:"fa-history"}, {h:"13:45", m:"Português", o:"Sintaxe + 10Q", i:"fa-language", q:true}, {h:"14:45", m:"Dir. Constitucional", o:"Judiciário + 10Q", i:"fa-balance-scale", q:true}, {h:"16:00", m:"Processo Penal", o:"Ação Penal + 5Q", i:"fa-handcuffs", q:true}, {h:"17:00", m:"Dir. Administrativo", o:"Atos + 15Q", i:"fa-university", q:true}]},
+        5: { d: "Sexta-feira", tarefas: [{h:"13:30", m:"Revisão Const", o:"24h", i:"fa-history"}, {h:"13:45", m:"Português", o:"Redação + 20Q", i:"fa-pen-fancy", q:true}, {h:"14:45", m:"Dir. Constitucional", o:"Org. Estado + 20Q", i:"fa-balance-scale", q:true}, {h:"16:00", m:"Direito Civil", o:"Sujeitos + 5Q", i:"fa-file-signature", q:true}, {h:"17:40", m:"Revisão Semanal", o:"Check", i:"fa-chart-pie"}]}
     };
 
     let currentDay = parseInt(localStorage.getItem('dayIndex')) || 1;
@@ -299,40 +192,28 @@ if (acesso !== 'true') {
         const container = document.getElementById('tasks-container');
         const data = cronograma[currentDay];
         document.getElementById('current-day-display').innerText = data.d;
-
         container.innerHTML = data.tarefas.map((t, i) => {
             const id = `task-${currentDay}-${i}`;
             const done = localStorage.getItem(id) === 'true';
-            
             const now = new Date();
             const [h, m] = t.h.split(':').map(Number);
             const isToday = now.getDay() === currentDay;
             const isOverdue = isToday && !done && (now.getHours() > h || (now.getHours() === h && now.getMinutes() > m));
-
             return `
                 <div class="task-card ${done ? 'completed' : ''} ${isOverdue ? 'overdue' : ''}">
                     <div class="icon-box"><i class="fas ${t.i}"></i></div>
                     <div class="task-content">
-                        <span class="task-time">${t.h}</span>
-                        <span class="task-name">${t.m}</span>
-                        <span class="task-obs">${t.o}</span>
+                        <span class="task-time">${t.h}</span><span class="task-name">${t.m}</span><span class="task-obs">${t.o}</span>
                     </div>
-                    <label>
-                        <input type="checkbox" onchange="markTask('${id}', ${t.q || false}, this.checked)" ${done ? 'checked' : ''}>
-                        <div class="check-btn"><i class="fas fa-check"></i></div>
-                    </label>
-                </div>
-            `;
+                    <label><input type="checkbox" onchange="markTask('${id}', ${t.q || false}, this.checked)" ${done ? 'checked' : ''}><div class="check-btn"><i class="fas fa-check"></i></div></label>
+                </div>`;
         }).join('');
         checkLock();
     }
 
     function markTask(id, isQ, checked) {
         localStorage.setItem(id, checked);
-        if (checked && isQ) {
-            activeQId = id;
-            document.getElementById('modal-q').style.display = 'block';
-        }
+        if (checked && isQ) { activeQId = id; document.getElementById('modal-q').style.display = 'block'; }
         renderMissao();
     }
 
@@ -346,9 +227,7 @@ if (acesso !== 'true') {
     function checkLock() {
         const total = cronograma[currentDay].tarefas.length;
         let done = 0;
-        for(let i=0; i<total; i++) {
-            if(localStorage.getItem(`task-${currentDay}-${i}`) === 'true') done++;
-        }
+        for(let i=0; i<total; i++) { if(localStorage.getItem(`task-${currentDay}-${i}`) === 'true') done++; }
         const isDone = done === total;
         document.getElementById('btn-proximo').disabled = !isDone;
         document.getElementById('lock-msg').style.display = isDone ? 'none' : 'block';
@@ -373,20 +252,12 @@ if (acesso !== 'true') {
     }
 
     function updateEvolucaoUI() {
-        const totalDiasMeta = 120; 
-        const diasConcluidos = parseInt(localStorage.getItem('totalDiasFeitos')) || 0;
-        const percGlobal = Math.min(Math.round((diasConcluidos / totalDiasMeta) * 100), 100);
-        
+        const percGlobal = Math.min(Math.round(((parseInt(localStorage.getItem('totalDiasFeitos')) || 0) / 120) * 100), 100);
         const circle = document.getElementById('global-circle');
         circle.style.background = `conic-gradient(var(--navy) ${percGlobal}%, #eee 0%)`;
         circle.setAttribute('data-value', percGlobal + '%');
-
-        const materias = ["Português", "Dir. Constitucional", "Direito Penal", "Dir. Administrativo", "Processo Penal", "Processo Civil"];
-        document.getElementById('materias-evolucao-list').innerHTML = materias.map(m => `
-            <div class="materia-prog-card">
-                <span style="font-weight:800; font-size:0.75rem; color:var(--navy); text-transform: uppercase;">${m}</span>
-                <span style="font-weight:900; color:var(--gold); font-size: 0.9rem;">${Math.min(100, Math.floor(percGlobal * (1 + (Math.sin(m.length)*0.2))))}%</span>
-            </div>
+        document.getElementById('materias-evolucao-list').innerHTML = ["Português", "Dir. Constitucional", "Direito Penal", "Dir. Administrativo"].map(m => `
+            <div class="materia-prog-card"><span>${m}</span><span>${Math.min(100, Math.floor(percGlobal * 1.1))}%</span></div>
         `).join('');
     }
 
@@ -407,7 +278,8 @@ if (acesso !== 'true') {
         document.getElementById('date-text').innerText = n.toLocaleDateString('pt-BR', {day:'numeric', month:'long'});
     }, 1000);
 
-    renderMissao();
+    // Inicia a verificação de acesso ao carregar
+    verificarAcesso();
 </script>
 </body>
 </html>
